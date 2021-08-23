@@ -1,4 +1,4 @@
-# Clyqe Project
+# ravon taxi Project
 
 ## Outline
 - Prerequisites
@@ -11,8 +11,6 @@
 ## Prerequisites
 This project has following prerequisites
 - python 3.8.5
-- docker 19.03.12
-- docker-compose 1.25.0
 
 
 ## Setup
@@ -21,8 +19,8 @@ This project has following prerequisites
 
 - Install virtual environment:
 ```
-git clone git@github.com:clyqe/clyqe-backend.git
-cd clyqe-backend
+git clone git@gitlab.com:dozolab/ravon_taxi.git
+cd ravon-taxi-backend
 python3.8 -m venv --prompt="v" .env
 ```
 
