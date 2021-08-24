@@ -36,7 +36,10 @@ source ./deployments/development/.env
 pip install pre-commit
 pre-commit install
 ```
-
+- if you want to streamline your codes
+```
+pre-commit run --all-files
+```  
 - If *postgresql database* has not be started please start it by following command:
 ```
 docker-compose -f deployments/development/docker-compose.yml up -d
