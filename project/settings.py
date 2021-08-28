@@ -88,7 +88,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'project.middlewares.Calendar'
 ]
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale/'),
@@ -217,26 +216,14 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 # STATIC_URL = '/assets/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+STATIC_URL = '/assets/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
-
-AWS_ACCESS_KEY_ID = 'FBOOSVUPXVJ2GMVH6AXS'
-AWS_SECRET_ACCESS_KEY = 'x9d6T8NMTm6jKHtutqxWfShjUG4wb1qgujiZ6SHNP+4'
-AWS_STORAGE_BUCKET_NAME = 'edumanager'
-AWS_S3_ENDPOINT_URL = 'https://edumanager.fra1.digitaloceanspaces.com'
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_LOCATION = 'assets'
-STATIC_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, AWS_LOCATION)
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
 
 CKEDITOR_UPLOAD_PATH = 'content/ckeditor/'
 
@@ -374,14 +361,14 @@ SMS_KEY = env('SMS_KEY')
 CELERY_BROKER_URL = 'amqp://localhost'
 ASGI_APPLICATION = 'project.asgi.application'
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-        },
-    },
-}
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             "hosts": [('127.0.0.1', 6379)],
+#         },
+#     },
+# }
 
 CLICK_SETTINGS = {
     'ENDPOINT': 'https://api.click.uz/v2/merchant/',
