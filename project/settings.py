@@ -61,6 +61,7 @@ THIRT_PARTY_APPS = [
     'rest_framework_swagger',
     'channels',
     'storages',
+    'django_grpc_framework',
 
 ]
 CUSTOM_CREATED_APPS = [
@@ -361,14 +362,14 @@ SMS_KEY = env('SMS_KEY')
 CELERY_BROKER_URL = 'amqp://localhost'
 ASGI_APPLICATION = 'project.asgi.application'
 
-# CHANNEL_LAYERS = {
-#     'default': {
-#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
-#         'CONFIG': {
-#             "hosts": [('127.0.0.1', 6379)],
-#         },
-#     },
-# }
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 CLICK_SETTINGS = {
     'ENDPOINT': 'https://api.click.uz/v2/merchant/',
@@ -377,3 +378,7 @@ CLICK_SETTINGS = {
     'merchant_usr_id': '19716',
     'secret_key': 'nD3jMQINoSa',
 }
+
+# Celery Configuration Options
+CELERY_TIMEZONE = "Asia/Tashkent"
+CELERY_TASK_TRACK_STARTED = True
