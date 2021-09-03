@@ -1,3 +1,5 @@
+import uuid
+
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
@@ -26,6 +28,7 @@ class CustomUser(AbstractUser):
         (DRIVER, 'Driver'),
         (CUSTOMER, 'Customer')
     )
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     username_validator = UnicodeUsernameValidator()
 
     username = models.CharField(
@@ -106,9 +109,6 @@ class CustomUser(AbstractUser):
 
     def get_phone(self):
         return str(self.phone).replace("+998", "")
-
-
-
 
 
 class Cashilok(models.Model):
