@@ -1,6 +1,8 @@
 from django.urls import path
 from rest_framework import routers
 
+import account_pb2_grpc
+from .services import UserService
 from .views import GetUser, UserList, TokenGenerateView, \
     TokenRefreshView, VerifyPhone, ResendVerificationCode
 
@@ -14,4 +16,6 @@ urlpatterns = router.urls + [
     path('verify-phone/', VerifyPhone.as_view(), name='verify-phone'),
     path('resend/verification/password/', ResendVerificationCode.as_view(), name='resend_verification_password'),
 ]
+
+
 

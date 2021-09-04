@@ -76,10 +76,18 @@ class CustomUser(AbstractUser):
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
 
     objects = UserManager()
+    registration_address = models.CharField(max_length=300, null=True)
+    registration_lat = models.CharField(max_length=100,null=True)
+    registration_long = models.CharField(max_length=100,null=True)
+    registration_phone_type = models.CharField(max_length=100,null=True)
+    registration_phone_model = models.CharField(max_length=100,null=True)
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
+
+
+
 
     class Meta:
         verbose_name = _('user')
