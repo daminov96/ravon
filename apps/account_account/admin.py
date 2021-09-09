@@ -22,7 +22,7 @@ class UserAdmin(DjangoUserAdmin, ie_admin.ImportExportModelAdmin):
                 'username', 'email', 'password1', 'password2', 'phone', 'dob', 'first_name', 'last_name', 'image'),
         }),
     )
-    list_display = ('get_fullname', 'id', 'phone', 'is_staff', 'date_joined',)
+    list_display = ('get_fullname', 'id', 'uuid','phone', 'is_staff', 'date_joined',)
     search_fields = ('email', 'first_name', 'last_name', 'phone',)
     ordering = ('email',)
     list_per_page = 200

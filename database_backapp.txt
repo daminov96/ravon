@@ -111,14 +111,39 @@ class Car(models.Model):
     number_of_seats = models.IntegerField(default=4)
 
 
+class ReasonToCancelTrip(models.Model):
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True, null=True)
+    reason = models.CharField(max_length=300)
 
 
-# class RateOfDriver(models.Model):
-#     created = models.DateTimeField(auto_now_add=True, null=True)
-#     updated = models.DateTimeField(auto_now=True, null=True)
-#     on_trip = models.OneToOneField(Trip, on_delete=models.CASCADE)
-#     customer = models.ForeignKey('account_account.CustomUser', related_name='rated_trips', on_delete=models.SET_NULL,
-#                                  null=True)
-#     driver = models.ForeignKey('account_account.CustomUser', related_name='rates', on_delete=models.SET_NULL, null=True)
-#     rate = models.IntegerField(choices=RATE_CHOICES)
-#     comment = models.TextField()
+class Trip(models.Model):
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True, null=True)
+    driver = models.ForeignKey('account_account.CustomUser', on_delete=models.SET_NULL, null=True,
+                               related_name='driver_trips')
+    customer = models.ForeignKey('account_account.CustomUser', on_delete=models.SET_NULL, null=True,
+                                 related_name='customer_trips')
+    plan = models.ForeignKey(Plan, on_delete=models.SET_NULL, related_name='trips', null=True)
+    state = models.CharField(max_length=30, choices=STATE_CHOICES_OF_TRIP)
+    from_point = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, related_name='starts')
+    to_point = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, related_name='distinations')
+    price = models.FloatField(default=0)
+    reason_to_cancel = models.ManyToManyField(ReasonToCancelTrip, related_name='trips', null=True, blank=True)
+
+
+class TripPath(models.Model):
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name='paths')
+    long = models.CharField(max_length=200)
+    lat = models.CharField(max_length=200)
+
+
+class RateOfDriver(models.Model):
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True, null=True)
+    on_trip = models.OneToOneField(Trip, on_delete=models.CASCADE)
+    customer = models.ForeignKey('account_account.CustomUser', related_name='rated_trips', on_delete=models.SET_NULL,
+                                 null=True)
+    driver = models.ForeignKey('account_account.CustomUser', related_name='rates', on_delete=models.SET_NULL, null=True)
+    rate = models.IntegerField(choices=RATE_CHOICES)
+    comment = models.TextField()

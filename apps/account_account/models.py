@@ -1,7 +1,7 @@
 import uuid
 
 from ckeditor.fields import RichTextField
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, User
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.mail import send_mail
 from django.db import models
@@ -28,7 +28,7 @@ class CustomUser(AbstractUser):
         (DRIVER, 'Driver'),
         (CUSTOMER, 'Customer')
     )
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     username_validator = UnicodeUsernameValidator()
 
     username = models.CharField(
