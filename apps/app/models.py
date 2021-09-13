@@ -1,15 +1,18 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
-from parler.models import TranslatableModel, TranslatedFields
 from parler.managers import TranslationManager
+from parler.models import TranslatableModel, TranslatedFields
+from .managers import CityManager, CarManager
 from apps.constants import *
 
 
 def validate_interval(value):
     if value < 0.0:
-        raise ValidationError(_('%(value)s must be in the range [0.0, infinity]'), params={'value': value}, )
+        raise ValidationError(
+            _("%(value)s must be in the range [0.0, infinity]"),
+            params={"value": value},
+        )
 
 
 class City(models.Model):
@@ -17,6 +20,7 @@ class City(models.Model):
     latitude = models.TextField()
     longtitude = models.TextField()
 
+    objects = CityManager()
 
 class Routine(models.Model):
     MORNING_ROUTINE = 1
@@ -24,10 +28,10 @@ class Routine(models.Model):
     AFTERNOON_ROUTINE = 3
     EVENING_ROUTINE = 4
     ROUTINE_CHOICES = (
-        (MORNING_ROUTINE, 'Morning Routine'),
-        (NOON_ROUTINE, 'Noon Routine'),
-        (AFTERNOON_ROUTINE, 'Noon Routine'),
-        (EVENING_ROUTINE, 'Evening Routine'),
+        (MORNING_ROUTINE, "Morning Routine"),
+        (NOON_ROUTINE, "Noon Routine"),
+        (AFTERNOON_ROUTINE, "Noon Routine"),
+        (EVENING_ROUTINE, "Evening Routine"),
     )
     routine = models.IntegerField(choices=ROUTINE_CHOICES)
     start_range = models.TimeField(unique=True)
@@ -40,39 +44,45 @@ class MinimumPriceForKm(models.Model):
     routine = models.ForeignKey(Routine, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ('city', 'routine')
+        unique_together = ("city", "routine")
 
 
 class Plan(TranslatableModel):
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
-    translations = TranslatedFields(
-        name=models.CharField(max_length=100)
-    )
+    translations = TranslatedFields(name=models.CharField(max_length=100))
     min_price = models.FloatField(validators=[validate_interval])
     rate = models.FloatField(default=1)
-    image = models.ImageField(upload_to='plan_image/')
+    image = models.ImageField(upload_to="plan_image/")
     objects = TranslationManager()
+
+    def __str__(self):
+        return self.safe_translation_getter("name") or ""
 
 
 class LocationType(TranslatableModel):
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
-    translations = TranslatedFields(
-        name=models.CharField(max_length=300)
-    )
+    translations = TranslatedFields(name=models.CharField(max_length=300))
 
 
 class Location(TranslatableModel):
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
-    translations = TranslatedFields(
-        location_name=models.CharField(max_length=100)
+    translations = TranslatedFields(location_name=models.CharField(max_length=100))
+    location_type = models.ForeignKey(
+        LocationType,
+        on_delete=models.CASCADE,
+        related_name="locations",
+        null=True,
+        blank=True,
     )
-    location_type = models.ForeignKey(LocationType, on_delete=models.CASCADE, related_name='locations', null=True,
-                                      blank=True)
-    owner = models.ForeignKey('account_account.CustomUser', related_name='locations', on_delete=models.SET_NULL,
-                              null=True)
+    owner = models.ForeignKey(
+        "account_account.CustomUser",
+        related_name="locations",
+        on_delete=models.SET_NULL,
+        null=True,
+    )
     model_object_id = models.CharField(max_length=150)
     model_object_type = models.CharField(max_length=50)
     lat = models.CharField(max_length=150)
@@ -82,19 +92,15 @@ class Location(TranslatableModel):
 class Brand(TranslatableModel):
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
-    translations = TranslatedFields(
-        name=models.CharField(max_length=100)
-    )
+    translations = TranslatedFields(name=models.CharField(max_length=100))
     logo = models.FileField(null=True, blank=True)
 
 
 class Model(TranslatableModel):
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
-    translations = TranslatedFields(
-        name=models.CharField(max_length=100)
-    )
-    image = models.ImageField(upload_to='model_image/')
+    translations = TranslatedFields(name=models.CharField(max_length=100))
+    image = models.ImageField(upload_to="model_image/")
 
 
 class Car(models.Model):
@@ -103,16 +109,14 @@ class Car(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True, blank=True)
     model = models.ForeignKey(Model, on_delete=models.SET_NULL, null=True, blank=True)
     min_price = models.FloatField(validators=[validate_interval])
-    image = models.ImageField(upload_to='plan_image/')
+    image = models.ImageField(upload_to="plan_image/")
     color = models.CharField(max_length=100)
     number = models.CharField(max_length=100)
     available_wheelchair = models.BooleanField(default=False)
     has_seat_for_babes = models.BooleanField(default=False)
     number_of_seats = models.IntegerField(default=4)
 
-
-
-
+    objects = CarManager()
 # class RateOfDriver(models.Model):
 #     created = models.DateTimeField(auto_now_add=True, null=True)
 #     updated = models.DateTimeField(auto_now=True, null=True)
