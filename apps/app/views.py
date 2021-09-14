@@ -1,18 +1,28 @@
 from django.shortcuts import render
-from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import CreateAPIView
+from rest_framework.viewsets import ModelViewSet
 
-from .models import City, LocationType, MinimumPriceForKm, Plan, Routine, Location, Car, Brand, Model
+from .models import (
+    Brand,
+    Car,
+    City,
+    Location,
+    LocationType,
+    MinimumPriceForKm,
+    Model,
+    Plan,
+    Routine,
+)
 from .serializers import (
+    BrandSerializer,
+    CarSerializer,
     CitySerializer,
     LocationSerializer,
     LocationTypeSerializer,
     MinimumPriceKmSerializer,
+    ModelSerializer,
     PlanSerializer,
     RoutineSerializer,
-    CarSerializer,
-    BrandSerializer,
-    ModelSerializer
 )
 
 

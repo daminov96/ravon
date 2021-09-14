@@ -67,11 +67,22 @@ class LocationSerializer(TranslatableModelSerializer):
 
 
 class CarSerializer(serializers.ModelSerializer):
-    image = serializers.FileField(source='details_sample.image', read_only=True)
+    image = serializers.FileField(source="details_sample.image", read_only=True)
 
     class Meta:
         model = Car
-        fields = ['id', 'brand', 'model', 'min_price', 'image', 'color', 'number', 'available_wheelchair', 'has_seat_for_babes', 'number_of_seats']
+        fields = [
+            "id",
+            "brand",
+            "model",
+            "min_price",
+            "image",
+            "color",
+            "number",
+            "available_wheelchair",
+            "has_seat_for_babes",
+            "number_of_seats",
+        ]
 
 
 class BrandSerializer(TranslatableModelSerializer):
@@ -79,7 +90,7 @@ class BrandSerializer(TranslatableModelSerializer):
 
     class Meta:
         model = Brand
-        fields = ['id', 'translations', 'logo']
+        fields = ["id", "translations", "logo"]
 
 
 class ModelSerializer(TranslatableModelSerializer):
@@ -87,5 +98,4 @@ class ModelSerializer(TranslatableModelSerializer):
 
     class Meta:
         model = Model
-        fields = ['id', 'translations', 'image']
-
+        fields = ["id", "translations", "image"]
