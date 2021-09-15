@@ -1,4 +1,5 @@
 from django.db import models, transaction
+from django.db.models import F, Q
 
 
 class CityManager(models.Manager):
@@ -7,7 +8,6 @@ class CityManager(models.Manager):
 
 
 class CarBrandManager(models.Manager):
-
     def create_brand(self, data):
         instances = []
         for instance in data:
@@ -27,8 +27,16 @@ class CarManager(models.Manager):
             car.save()
             return car
 
-    # def get_cars(self):
-    #     return self.get_queryset().all()
+    def get_car_detail(self):
+        query = self.select_related("brand").all()
+        print("query", query)
+        return query
+        # return self.get_queryset().all()
+
+    def get_cars(self):
+        print('get carsssss')
+        return self.select_related("brand")
+
 
 # class RoutineManager(models.Manager):
 #     def get_routine(self, routine):

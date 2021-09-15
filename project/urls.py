@@ -1,3 +1,4 @@
+import debug_toolbar
 from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
@@ -50,6 +51,7 @@ urlpatterns = [
             title="Ravon Taxi", description="A web api of Ravon Taxi models "
         ),
     ),
+    path("__debug__/", include(debug_toolbar.urls)),
     # url(r'^', include('rest_framework_tus.urls', namespace='rest_framework_tus')),
     # new
 ]

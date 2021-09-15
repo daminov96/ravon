@@ -4,6 +4,7 @@ from rest_framework import routers
 from .views import (
     BrandView,
     CarCreateView,
+    CarDetailView,
     CarView,
     CityView,
     LocationTypeView,
@@ -12,6 +13,7 @@ from .views import (
     ModelView,
     PlanView,
     RoutineView,
+    CarListView,
 )
 
 router = routers.SimpleRouter()
@@ -27,4 +29,8 @@ router.register("car", CarView)
 router.register("brand", BrandView)
 router.register("model", ModelView)
 
-urlpatterns = router.urls + [path("car/create", CarCreateView.as_view())]
+urlpatterns = router.urls + [
+    # path("car/create", CarCreateView.as_view()),
+    # path("carDetail/<int:id>/", CarDetailView.as_view()),
+    # path('car_list/', CarListView.as_view())
+]
