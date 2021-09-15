@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from apps.account_account.models import CustomUser, Cashilok
+from apps.account_account.models import Cashilok, CustomUser
 from apps.utils.utils import sendsms
 
 
@@ -11,9 +11,9 @@ class UserSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True)
 
     def validate(self, data):
-        if data.get('password1') and data.get('password2'):
-            if data['password1'] != data['password2']:
-                raise serializers.ValidationError('Passwords must match.')
+        if data.get("password1") and data.get("password2"):
+            if data["password1"] != data["password2"]:
+                raise serializers.ValidationError("Passwords must match.")
         return data
 
     def to_representation(self, instance):
@@ -56,39 +56,58 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         data = {
-            key: value for key, value in validated_data.items()
-            if key not in ('password1', 'password2')
+            key: value
+            for key, value in validated_data.items()
+            if key not in ("password1", "password2")
         }
-        data['password'] = validated_data['password1']
-        data['username'] = data['phone']
+        data["password"] = validated_data["password1"]
+        data["username"] = data["phone"]
         user = self.Meta.model.objects.create_user(**data)
         code = sendsms(phone=user.phone)
         user.phone_verification_code = code
         user.is_active = False
         user.save()
         import telebot
+
         count = CustomUser.objects.all().count()
         bot = telebot.TeleBot(
-            "1309416311:AAEr_hirX_4-DhBLVoM-fpNLUPBQ3vqF4zk")  # You can set parse_mode by default. HTML or MARKDOWN
-        message = f"https://edumanager.uz 🎉 saytiga yangi foydalanuvchi qoshildi \n" \
-                  f"Username:{user.username}\nFull Name: {user.first_name} {user.last_name}\n" \
-                  f"Foydalanuvchilar Soni: {count} ga yetdi"
-        bot.send_message('-442365863', f'{message}')
-        bot.send_message('-557715643', f'{message}')
+            "1309416311:AAEr_hirX_4-DhBLVoM-fpNLUPBQ3vqF4zk"
+        )  # You can set parse_mode by default. HTML or MARKDOWN
+        message = (
+            f"https://edumanager.uz 🎉 saytiga yangi foydalanuvchi qoshildi \n"
+            f"Username:{user.username}\nFull Name: {user.first_name} {user.last_name}\n"
+            f"Foydalanuvchilar Soni: {count} ga yetdi"
+        )
+        bot.send_message("-442365863", f"{message}")
+        bot.send_message("-557715643", f"{message}")
 
         return user
 
     class Meta:
         model = CustomUser
-        exclude = ['password', 'is_superuser', 'user_permissions', 'groups', 'email', 'phone_verification_code']
-        read_only_fields = ('username', 'parents', 'last_login', 'is_staff', 'is_superuser', 'is_active')
-        write_only_fields = ('password1', 'password2')
+        exclude = [
+            "password",
+            "is_superuser",
+            "user_permissions",
+            "groups",
+            "email",
+            "phone_verification_code",
+        ]
+        read_only_fields = (
+            "username",
+            "parents",
+            "last_login",
+            "is_staff",
+            "is_superuser",
+            "is_active",
+        )
+        write_only_fields = ("password1", "password2")
 
 
 class UserMiniSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['id', 'first_name', 'last_name', 'username']
+        fields = ["id", "first_name", "last_name", "username"]
 
 
 class UserSerializerWithToken(serializers.ModelSerializer):
@@ -104,7 +123,7 @@ class UserSerializerWithToken(serializers.ModelSerializer):
         return token
 
     def create(self, validated_data):
-        password = validated_data.pop('password', None)
+        password = validated_data.pop("password", None)
         instance = self.Meta.model(**validated_data)
         if password is not None:
             instance.set_password(password)
@@ -113,34 +132,33 @@ class UserSerializerWithToken(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('token', 'username', 'password')
+        fields = ("token", "username", "password")
 
 
 class UsersInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = '__all__'
+        fields = "__all__"
 
 
 class TokenSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
         refresh = self.get_token(self.user)
-        data['refresh'] = str(refresh)
-        data['access'] = str(refresh.access_token)
-        data['user'] = UserSerializer(instance=self.user, context=self.context).data
+        data["refresh"] = str(refresh)
+        data["access"] = str(refresh.access_token)
+        data["user"] = UserSerializer(instance=self.user, context=self.context).data
         return data
-
 
 
 from django.contrib.auth.models import User
 from django_grpc_framework import proto_serializers
-import account_pb2
 
+import account_pb2
 
 
 class UserProtoSerializer(proto_serializers.ModelProtoSerializer):
     class Meta:
         model = User
         proto_class = account_pb2.CustomUser
-        fields = '__all__'
+        fields = "__all__"

@@ -1,9 +1,11 @@
 from django.core.management import BaseCommand
-from apps.rest_api.models import Group
+
 from apps.chat.models import Room
+from apps.rest_api.models import Group
+
 
 class Command(BaseCommand):
-    help = 'Closes the specified poll for voting'
+    help = "Closes the specified poll for voting"
 
     def handle(self, *args, **options):
         groups = Group.objects.all()

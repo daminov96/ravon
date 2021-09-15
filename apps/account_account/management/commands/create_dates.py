@@ -1,10 +1,11 @@
 from django.core.management import BaseCommand
+
 from apps.app.models import Day, Month, Year
 from apps.app.modules import day_choices
 
 
 class Command(BaseCommand):
-    help = 'Closes the specified poll for voting'
+    help = "Closes the specified poll for voting"
 
     def handle(self, *args, **options):
         months = Month.objects.all()

@@ -15,36 +15,34 @@ from apps.account_account.managers import UserManager
 
 
 class CustomUser(AbstractUser):
-    MALE = 'male'
-    FEMALE = 'female'
+    MALE = "male"
+    FEMALE = "female"
     GENDER_CHOICES = (
-        (MALE, 'Male'),
-        (FEMALE, 'Female'),
-
+        (MALE, "Male"),
+        (FEMALE, "Female"),
     )
-    DRIVER = 'driver'
-    CUSTOMER = 'customer'
-    TYPE_OF_USER = (
-        (DRIVER, 'Driver'),
-        (CUSTOMER, 'Customer')
-    )
+    DRIVER = "driver"
+    CUSTOMER = "customer"
+    TYPE_OF_USER = ((DRIVER, "Driver"), (CUSTOMER, "Customer"))
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     username_validator = UnicodeUsernameValidator()
 
     username = models.CharField(
-        _('username'),
+        _("username"),
         max_length=150,
         unique=True,
         null=True,
         blank=True,
-        help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
+        help_text=_(
+            "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+        ),
         validators=[username_validator],
         error_messages={
-            'unique': _("A user with that username already exists."),
+            "unique": _("A user with that username already exists."),
         },
     )
-    first_name = models.CharField(_('first name'), max_length=150, blank=True)
-    last_name = models.CharField(_('last name'), max_length=150, blank=True)
+    first_name = models.CharField(_("first name"), max_length=150, blank=True)
+    last_name = models.CharField(_("last name"), max_length=150, blank=True)
     dob = models.DateField(null=True)
     gender = models.CharField(choices=GENDER_CHOICES, max_length=15, null=True)
     phone = models.CharField(
@@ -52,49 +50,40 @@ class CustomUser(AbstractUser):
         null=True,
         blank=True,
         unique=True,
-        error_messages={
-            'unique': _("A user with that phone already exists.")
-        },
+        error_messages={"unique": _("A user with that phone already exists.")},
     )
-    email = models.EmailField(
-        _('email address'),
-        null=True,
-        blank=True
-    )
+    email = models.EmailField(_("email address"), null=True, blank=True)
     phone_verification_code = models.IntegerField(null=True, blank=True)
-    image = models.ImageField(upload_to=f'user_profile_image/', null=True, blank=True)
+    image = models.ImageField(upload_to=f"user_profile_image/", null=True, blank=True)
     is_staff = models.BooleanField(
-        _('staff status'),
+        _("staff status"),
         default=False,
-        help_text=_('Designates whether the user can log into this admin site.'),
+        help_text=_("Designates whether the user can log into this admin site."),
     )
     is_active = models.BooleanField(
-        _('active'),
+        _("active"),
         default=True,
         help_text=_(
-            'Designates whether this user should be treated as active. '
-            'Unselect this instead of deleting accounts.'
+            "Designates whether this user should be treated as active. "
+            "Unselect this instead of deleting accounts."
         ),
     )
-    date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
+    date_joined = models.DateTimeField(_("date joined"), auto_now_add=True)
 
     objects = UserManager()
     registration_address = models.CharField(max_length=300, null=True)
-    registration_lat = models.CharField(max_length=100,null=True)
-    registration_long = models.CharField(max_length=100,null=True)
-    registration_phone_type = models.CharField(max_length=100,null=True)
-    registration_phone_model = models.CharField(max_length=100,null=True)
+    registration_lat = models.CharField(max_length=100, null=True)
+    registration_long = models.CharField(max_length=100, null=True)
+    registration_phone_type = models.CharField(max_length=100, null=True)
+    registration_phone_model = models.CharField(max_length=100, null=True)
 
-    EMAIL_FIELD = 'email'
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
-
-
-
+    EMAIL_FIELD = "email"
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ["email"]
 
     class Meta:
-        verbose_name = _('user')
-        verbose_name_plural = _('users')
+        verbose_name = _("user")
+        verbose_name_plural = _("users")
 
     def clean(self):
         super().clean()
@@ -104,7 +93,7 @@ class CustomUser(AbstractUser):
         """
         Return the first_name plus the last_name, with a space in between.
         """
-        full_name = '%s %s' % (self.first_name, self.last_name)
+        full_name = "%s %s" % (self.first_name, self.last_name)
         return full_name.strip()
 
     def get_short_name(self):
@@ -120,7 +109,9 @@ class CustomUser(AbstractUser):
 
 
 class Cashilok(models.Model):
-    owner = models.OneToOneField(CustomUser, related_name='cashelok', on_delete=models.CASCADE)
+    owner = models.OneToOneField(
+        CustomUser, related_name="cashelok", on_delete=models.CASCADE
+    )
     money = models.FloatField(default=0)
 
     def save(self, *args, **kwargs):
@@ -143,21 +134,21 @@ class CashilokFill(models.Model):
         (STATE_PAY_ACCEPTED, "TO'L0V QABUL QILINDI"),
         (STATE_CANCELLED, "QOLDIRILDI"),
     )
-    CLICK = 'click'
-    PAYME = 'payme'
-    ON_HAND = 'on_hand'
+    CLICK = "click"
+    PAYME = "payme"
+    ON_HAND = "on_hand"
 
-    PAYMENT_METHOD_CHOICES = (
-        (CLICK, 'Click'),
-        (PAYME, 'Payme'),
-        (ON_HAND, 'On hand')
+    PAYMENT_METHOD_CHOICES = ((CLICK, "Click"), (PAYME, "Payme"), (ON_HAND, "On hand"))
+
+    owner = models.ForeignKey(
+        CustomUser, related_name="cashelok_fills", on_delete=models.CASCADE
     )
-
-    owner = models.ForeignKey(CustomUser, related_name='cashelok_fills', on_delete=models.CASCADE)
     effected_to_cashelok = models.BooleanField(default=False)
     amount = models.FloatField(default=0)
     state = models.IntegerField(choices=PAYMENT_STATUS, default=STATE_AVAILABLE)
-    payment_method = models.CharField(max_length=30, null=True, choices=PAYMENT_METHOD_CHOICES)
+    payment_method = models.CharField(
+        max_length=30, null=True, choices=PAYMENT_METHOD_CHOICES
+    )
     created = models.DateTimeField(auto_now_add=True)
 
 
