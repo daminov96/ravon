@@ -1,18 +1,28 @@
 from django.shortcuts import render
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.generics import CreateAPIView
 
-from .models import City, LocationType, MinimumPriceForKm, Plan, Routine, Location, Car, Brand, Model
+from .models import (
+    Brand,
+    Car,
+    City,
+    Location,
+    LocationType,
+    MinimumPriceForKm,
+    Model,
+    Plan,
+    Routine,
+)
 from .serializers import (
+    BrandSerializer,
+    CarSerializer,
     CitySerializer,
     LocationSerializer,
     LocationTypeSerializer,
     MinimumPriceKmSerializer,
+    ModelSerializer,
     PlanSerializer,
     RoutineSerializer,
-    CarSerializer,
-    BrandSerializer,
-    ModelSerializer
 )
 
 
@@ -47,8 +57,26 @@ class LocationView(ModelViewSet):
 
 
 class CarView(ModelViewSet):
+    # queryset = Car.objects.select_related('brand', 'model').all()
     queryset = Car.objects.all()
+    print(queryset)
     serializer_class = CarSerializer
+
+
+class CarDetailView(RetrieveAPIView):
+    serializer_class = CarSerializer
+    lookup_field = "id"
+
+    def get_queryset(self):
+        print("detail")
+        return Car.objects.get_car_detail()
+
+
+class CarListView(ListAPIView):
+    serializer_class = CarSerializer
+
+    def get_queryset(self):
+        return Car.objects.get_cars()
 
 
 class CarCreateView(CreateAPIView):

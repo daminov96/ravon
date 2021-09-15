@@ -17,6 +17,7 @@ from pathlib import Path
 import environ
 
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project.settings.base")
 
 env = environ.Env(DEBUG=(bool, False))
 environ.Env.read_env()
@@ -63,6 +64,7 @@ THIRT_PARTY_APPS = [
     "channels",
     "storages",
     "django_grpc_framework",
+    "debug_toolbar",
 ]
 CUSTOM_CREATED_APPS = [
     "apps.app",
@@ -93,6 +95,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 LOCALE_PATHS = (os.path.join(BASE_DIR, "locale/"),)
 

@@ -3,8 +3,10 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from parler.managers import TranslationManager
 from parler.models import TranslatableModel, TranslatedFields
-from .managers import CityManager, CarManager
+
 from apps.constants import *
+
+from .managers import CarBrandManager, CarManager, CityManager
 
 
 def validate_interval(value):
@@ -21,6 +23,7 @@ class City(models.Model):
     longtitude = models.TextField()
 
     objects = CityManager()
+
 
 class Routine(models.Model):
     MORNING_ROUTINE = 1
@@ -95,12 +98,19 @@ class Brand(TranslatableModel):
     translations = TranslatedFields(name=models.CharField(max_length=100))
     logo = models.FileField(null=True, blank=True)
 
+    # objects = CarBrandManager()
+    def __str__(self):
+        return self.safe_translation_getter("name") or ""
+
 
 class Model(TranslatableModel):
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
     translations = TranslatedFields(name=models.CharField(max_length=100))
     image = models.ImageField(upload_to="model_image/")
+
+    def __str__(self):
+        return self.safe_translation_getter("name") or ""
 
 
 class Car(models.Model):
@@ -117,6 +127,8 @@ class Car(models.Model):
     number_of_seats = models.IntegerField(default=4)
 
     objects = CarManager()
+
+
 # class RateOfDriver(models.Model):
 #     created = models.DateTimeField(auto_now_add=True, null=True)
 #     updated = models.DateTimeField(auto_now=True, null=True)
