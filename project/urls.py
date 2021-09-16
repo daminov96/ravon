@@ -42,6 +42,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("v1/", include("apps.account_account.urls")),
     path("v1/", include("apps.app.urls")),
+    path("v1/", include("apps.custom_endpoint_app.urls")),
     path("", include("ckeditor_uploader.urls")),
     path("schema/view/", schema_view),
     path("accounts/", include("allauth.urls")),

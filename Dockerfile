@@ -1,24 +1,20 @@
 FROM python:3.8.5-slim
-
+RUN mkdir /app
+COPY ravon_taxi/ /app/ravon_taxi/
+WORKDIR /app/ravon_taxi
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 RUN apt-get update \
     && apt-get -y install libpq-dev gcc \
     && pip install psycopg2
-# Set some env varibles
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
 
-# Set work directory
-WORKDIR /app
+
 
 # Install dependencies
-COPY /requirements /app
-RUN pip install --upgrade pip && pip install --no-cache-dir -r /app/base.txt
-# Add entrypoint.sh
-COPY ./entrypoint.sh /app/entrypoint.sh
+RUN pwd
+RUN pip install --upgrade pip && pip install --no-cache-dir -r ./requirements/base.txt
+RUN pwd
 
-
-RUN chmod +x /app/entrypoint.sh
-# Copy project
-COPY src /app
-# Run server
-CMD ["/app/entrypoint.sh"]
+RUN chmod +x /app/ravon_taxi/entrypoint.sh
+EXPOSE 8010
+CMD ["/app/ravon_taxi/entrypoint.sh"]

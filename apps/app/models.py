@@ -126,7 +126,7 @@ class Car(models.Model):
     has_seat_for_babes = models.BooleanField(default=False)
     number_of_seats = models.IntegerField(default=4)
 
-    objects = CarManager()
+    # objects = CarManager()
 
 
 # class RateOfDriver(models.Model):

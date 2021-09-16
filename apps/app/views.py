@@ -59,7 +59,6 @@ class LocationView(ModelViewSet):
 class CarView(ModelViewSet):
     # queryset = Car.objects.select_related('brand', 'model').all()
     queryset = Car.objects.all()
-    print(queryset)
     serializer_class = CarSerializer
 
 
