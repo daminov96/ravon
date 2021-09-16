@@ -5,7 +5,7 @@ package trip;
 import "google/protobuf/empty.proto";
 
 service TripController {
-    rpc List(TripListRequest) returns (stream Trip) {}
+    rpc List(TripListRequest) returns (TripListResponse) {}
     rpc Create(Trip) returns (Trip) {}
     rpc Retrieve(TripRetrieveRequest) returns (Trip) {}
     rpc Update(Trip) returns (Trip) {}
@@ -72,6 +72,10 @@ message Trip {
     Location to_point = 10;
     repeated int32 reason_to_cancel = 11;
     repeated ReasonToCancelTrip reason_to_cancel_infos = 12;
+}
+
+message TripListResponse{
+    repeated Trip results=1;
 }
 
 message TripListRequest {
