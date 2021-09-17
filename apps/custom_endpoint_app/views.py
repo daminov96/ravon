@@ -12,26 +12,30 @@ class OrderList(APIView):
     # permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
+        print('ad')
         user = self.request.user
         with grpc.insecure_channel('localhost:50051') as channel:
+            print('tushdimiaaa')
             stub = trip_pb2_grpc.TripControllerStub(channel)
             trip_list_request = trip_pb2.TripListRequest()
             trip_list_request.driver = "asdfasdfa"
-            users=[]
+            users = []
+            print('users', users)
             for user in stub.List(trip_list_request):
-                item=dict()
-                item.update({"id":user.id})
-                item.update({"created":user.created})
-                item.update({"driver":user.driver})
-                item.update({"customer":user.customer})
+                print("user", user)
+                item = dict()
+                item.update({"id": user.id})
+                item.update({"created": user.created})
+                item.update({"driver": user.driver})
+                item.update({"customer": user.customer})
+                print("item", item)
                 users.append(item)
             channel.close()
-        return Response({"success":users}, status=status.HTTP_200_OK)
+        return Response({"success": users}, status=status.HTTP_200_OK)
 
 
 class OrderCreate(APIView):
     # permission_classes = (permissions.IsAuthenticated,)
-
     def post(self, request, *args, **kwargs):
         user = self.request.user
         with grpc.insecure_channel('localhost:50051') as channel:
@@ -42,7 +46,5 @@ class OrderCreate(APIView):
                                  to_point=location, from_point=location)
             stub.Create(trip)
             channel.close()
-        return Response({"success":"success"}, status=status.HTTP_200_OK)
+        return Response({"success": "success"}, status=status.HTTP_200_OK)
 
-
-# "asdfasdfa"
