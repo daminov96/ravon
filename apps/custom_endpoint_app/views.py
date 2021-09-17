@@ -1,9 +1,6 @@
 import grpc
-from django.shortcuts import render
 from rest_framework.views import APIView
-import rest_framework.permissions as permissions
-from google.protobuf.json_format import MessageToDict
-from apps.generated.trip.protos import trip_pb2, trip_pb2_grpc
+from genprotos.trip_protos import trip_pb2, trip_pb2_grpc
 from rest_framework.response import Response
 import rest_framework.status  as status
 
