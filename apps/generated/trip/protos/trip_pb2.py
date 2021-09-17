@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x11protos/trip.proto\x12\x04trip\x1a\x1bgoogle/protobuf/empty.proto\"\x9e\x01\n\x08Location\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0f\n\x07\x63reated\x18\x02 \x01(\t\x12\x0f\n\x07updated\x18\x03 \x01(\t\x12\x15\n\rlocation_name\x18\x04 \x01(\t\x12\x17\n\x0fmodel_object_id\x18\x05 \x01(\t\x12\x19\n\x11model_object_type\x18\x06 \x01(\t\x12\x0b\n\x03lat\x18\x07 \x01(\t\x12\x0c\n\x04long\x18\x08 \x01(\t\"\x15\n\x13LocationListRequest\"%\n\x17LocationRetrieveRequest\x12\n\n\x02id\x18\x01 \x01(\x05\"R\n\x12ReasonToCancelTrip\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0f\n\x07\x63reated\x18\x02 \x01(\t\x12\x0f\n\x07updated\x18\x03 \x01(\t\x12\x0e\n\x06reason\x18\x04 \x01(\t\"\x1f\n\x1dReasonToCancelTripListRequest\"/\n!ReasonToCancelTripRetrieveRequest\x12\n\n\x02id\x18\x01 \x01(\x05\"\x9c\x02\n\x04Trip\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0f\n\x07\x63reated\x18\x02 \x01(\t\x12\x0f\n\x07updated\x18\x03 \x01(\t\x12\x0e\n\x06\x64river\x18\x04 \x01(\t\x12\x10\n\x08\x63ustomer\x18\x05 \x01(\t\x12\x0c\n\x04plan\x18\x06 \x01(\t\x12\r\n\x05state\x18\x07 \x01(\t\x12\r\n\x05price\x18\x08 \x01(\x02\x12\"\n\nfrom_point\x18\t \x01(\x0b\x32\x0e.trip.Location\x12 \n\x08to_point\x18\n \x01(\x0b\x32\x0e.trip.Location\x12\x18\n\x10reason_to_cancel\x18\x0b \x03(\x05\x12\x38\n\x16reason_to_cancel_infos\x18\x0c \x03(\x0b\x32\x18.trip.ReasonToCancelTrip\"B\n\x0fTripListRequest\x12\x0e\n\x06\x64river\x18\x01 \x01(\t\x12\x10\n\x08\x63ustomer\x18\x02 \x01(\t\x12\r\n\x05state\x18\x03 \x01(\t\"!\n\x13TripRetrieveRequest\x12\n\n\x02id\x18\x01 \x01(\x05\x32\xed\x01\n\x0eTripController\x12-\n\x04List\x12\x15.trip.TripListRequest\x1a\n.trip.Trip\"\x00\x30\x01\x12\"\n\x06\x43reate\x12\n.trip.Trip\x1a\n.trip.Trip\"\x00\x12\x33\n\x08Retrieve\x12\x19.trip.TripRetrieveRequest\x1a\n.trip.Trip\"\x00\x12\"\n\x06Update\x12\n.trip.Trip\x1a\n.trip.Trip\"\x00\x12/\n\x07\x44\x65stroy\x12\n.trip.Trip\x1a\x16.google.protobuf.Empty\"\x00\x32\x95\x02\n\x12LocationController\x12\x35\n\x04List\x12\x19.trip.LocationListRequest\x1a\x0e.trip.Location\"\x00\x30\x01\x12*\n\x06\x43reate\x12\x0e.trip.Location\x1a\x0e.trip.Location\"\x00\x12;\n\x08Retrieve\x12\x1d.trip.LocationRetrieveRequest\x1a\x0e.trip.Location\"\x00\x12*\n\x06Update\x12\x0e.trip.Location\x1a\x0e.trip.Location\"\x00\x12\x33\n\x07\x44\x65stroy\x12\x0e.trip.Location\x1a\x16.google.protobuf.Empty\"\x00\x32\xf9\x02\n\x1cReasonToCancelTripController\x12I\n\x04List\x12#.trip.ReasonToCancelTripListRequest\x1a\x18.trip.ReasonToCancelTrip\"\x00\x30\x01\x12>\n\x06\x43reate\x12\x18.trip.ReasonToCancelTrip\x1a\x18.trip.ReasonToCancelTrip\"\x00\x12O\n\x08Retrieve\x12\'.trip.ReasonToCancelTripRetrieveRequest\x1a\x18.trip.ReasonToCancelTrip\"\x00\x12>\n\x06Update\x12\x18.trip.ReasonToCancelTrip\x1a\x18.trip.ReasonToCancelTrip\"\x00\x12=\n\x07\x44\x65stroy\x12\x18.trip.ReasonToCancelTrip\x1a\x16.google.protobuf.Empty\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x11protos/trip.proto\x12\x04trip\x1a\x1bgoogle/protobuf/empty.proto\"\x9e\x01\n\x08Location\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0f\n\x07\x63reated\x18\x02 \x01(\t\x12\x0f\n\x07updated\x18\x03 \x01(\t\x12\x15\n\rlocation_name\x18\x04 \x01(\t\x12\x17\n\x0fmodel_object_id\x18\x05 \x01(\t\x12\x19\n\x11model_object_type\x18\x06 \x01(\t\x12\x0b\n\x03lat\x18\x07 \x01(\t\x12\x0c\n\x04long\x18\x08 \x01(\t\"\x15\n\x13LocationListRequest\"%\n\x17LocationRetrieveRequest\x12\n\n\x02id\x18\x01 \x01(\x05\"R\n\x12ReasonToCancelTrip\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0f\n\x07\x63reated\x18\x02 \x01(\t\x12\x0f\n\x07updated\x18\x03 \x01(\t\x12\x0e\n\x06reason\x18\x04 \x01(\t\"\x1f\n\x1dReasonToCancelTripListRequest\"/\n!ReasonToCancelTripRetrieveRequest\x12\n\n\x02id\x18\x01 \x01(\x05\"\x9c\x02\n\x04Trip\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0f\n\x07\x63reated\x18\x02 \x01(\t\x12\x0f\n\x07updated\x18\x03 \x01(\t\x12\x0e\n\x06\x64river\x18\x04 \x01(\t\x12\x10\n\x08\x63ustomer\x18\x05 \x01(\t\x12\x0c\n\x04plan\x18\x06 \x01(\t\x12\r\n\x05state\x18\x07 \x01(\t\x12\r\n\x05price\x18\x08 \x01(\x02\x12\"\n\nfrom_point\x18\t \x01(\x0b\x32\x0e.trip.Location\x12 \n\x08to_point\x18\n \x01(\x0b\x32\x0e.trip.Location\x12\x18\n\x10reason_to_cancel\x18\x0b \x03(\x05\x12\x38\n\x16reason_to_cancel_infos\x18\x0c \x03(\x0b\x32\x18.trip.ReasonToCancelTrip\"/\n\x10TripListResponse\x12\x1b\n\x07results\x18\x01 \x03(\x0b\x32\n.trip.Trip\"B\n\x0fTripListRequest\x12\x0e\n\x06\x64river\x18\x01 \x01(\t\x12\x10\n\x08\x63ustomer\x18\x02 \x01(\t\x12\r\n\x05state\x18\x03 \x01(\t\"!\n\x13TripRetrieveRequest\x12\n\n\x02id\x18\x01 \x01(\x05\x32\xf7\x01\n\x0eTripController\x12\x37\n\x04List\x12\x15.trip.TripListRequest\x1a\x16.trip.TripListResponse\"\x00\x12\"\n\x06\x43reate\x12\n.trip.Trip\x1a\n.trip.Trip\"\x00\x12\x33\n\x08Retrieve\x12\x19.trip.TripRetrieveRequest\x1a\n.trip.Trip\"\x00\x12\"\n\x06Update\x12\n.trip.Trip\x1a\n.trip.Trip\"\x00\x12/\n\x07\x44\x65stroy\x12\n.trip.Trip\x1a\x16.google.protobuf.Empty\"\x00\x32\x95\x02\n\x12LocationController\x12\x35\n\x04List\x12\x19.trip.LocationListRequest\x1a\x0e.trip.Location\"\x00\x30\x01\x12*\n\x06\x43reate\x12\x0e.trip.Location\x1a\x0e.trip.Location\"\x00\x12;\n\x08Retrieve\x12\x1d.trip.LocationRetrieveRequest\x1a\x0e.trip.Location\"\x00\x12*\n\x06Update\x12\x0e.trip.Location\x1a\x0e.trip.Location\"\x00\x12\x33\n\x07\x44\x65stroy\x12\x0e.trip.Location\x1a\x16.google.protobuf.Empty\"\x00\x32\xf9\x02\n\x1cReasonToCancelTripController\x12I\n\x04List\x12#.trip.ReasonToCancelTripListRequest\x1a\x18.trip.ReasonToCancelTrip\"\x00\x30\x01\x12>\n\x06\x43reate\x12\x18.trip.ReasonToCancelTrip\x1a\x18.trip.ReasonToCancelTrip\"\x00\x12O\n\x08Retrieve\x12\'.trip.ReasonToCancelTripRetrieveRequest\x1a\x18.trip.ReasonToCancelTrip\"\x00\x12>\n\x06Update\x12\x18.trip.ReasonToCancelTrip\x1a\x18.trip.ReasonToCancelTrip\"\x00\x12=\n\x07\x44\x65stroy\x12\x18.trip.ReasonToCancelTrip\x1a\x16.google.protobuf.Empty\"\x00\x62\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,])
 
@@ -384,6 +384,38 @@ _TRIP = _descriptor.Descriptor(
 )
 
 
+_TRIPLISTRESPONSE = _descriptor.Descriptor(
+  name='TripListResponse',
+  full_name='trip.TripListResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='results', full_name='trip.TripListResponse.results', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=732,
+  serialized_end=779,
+)
+
+
 _TRIPLISTREQUEST = _descriptor.Descriptor(
   name='TripListRequest',
   full_name='trip.TripListRequest',
@@ -425,8 +457,8 @@ _TRIPLISTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=732,
-  serialized_end=798,
+  serialized_start=781,
+  serialized_end=847,
 )
 
 
@@ -457,13 +489,14 @@ _TRIPRETRIEVEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=800,
-  serialized_end=833,
+  serialized_start=849,
+  serialized_end=882,
 )
 
 _TRIP.fields_by_name['from_point'].message_type = _LOCATION
 _TRIP.fields_by_name['to_point'].message_type = _LOCATION
 _TRIP.fields_by_name['reason_to_cancel_infos'].message_type = _REASONTOCANCELTRIP
+_TRIPLISTRESPONSE.fields_by_name['results'].message_type = _TRIP
 DESCRIPTOR.message_types_by_name['Location'] = _LOCATION
 DESCRIPTOR.message_types_by_name['LocationListRequest'] = _LOCATIONLISTREQUEST
 DESCRIPTOR.message_types_by_name['LocationRetrieveRequest'] = _LOCATIONRETRIEVEREQUEST
@@ -471,6 +504,7 @@ DESCRIPTOR.message_types_by_name['ReasonToCancelTrip'] = _REASONTOCANCELTRIP
 DESCRIPTOR.message_types_by_name['ReasonToCancelTripListRequest'] = _REASONTOCANCELTRIPLISTREQUEST
 DESCRIPTOR.message_types_by_name['ReasonToCancelTripRetrieveRequest'] = _REASONTOCANCELTRIPRETRIEVEREQUEST
 DESCRIPTOR.message_types_by_name['Trip'] = _TRIP
+DESCRIPTOR.message_types_by_name['TripListResponse'] = _TRIPLISTRESPONSE
 DESCRIPTOR.message_types_by_name['TripListRequest'] = _TRIPLISTREQUEST
 DESCRIPTOR.message_types_by_name['TripRetrieveRequest'] = _TRIPRETRIEVEREQUEST
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -524,6 +558,13 @@ Trip = _reflection.GeneratedProtocolMessageType('Trip', (_message.Message,), {
   })
 _sym_db.RegisterMessage(Trip)
 
+TripListResponse = _reflection.GeneratedProtocolMessageType('TripListResponse', (_message.Message,), {
+  'DESCRIPTOR' : _TRIPLISTRESPONSE,
+  '__module__' : 'protos.trip_pb2'
+  # @@protoc_insertion_point(class_scope:trip.TripListResponse)
+  })
+_sym_db.RegisterMessage(TripListResponse)
+
 TripListRequest = _reflection.GeneratedProtocolMessageType('TripListRequest', (_message.Message,), {
   'DESCRIPTOR' : _TRIPLISTREQUEST,
   '__module__' : 'protos.trip_pb2'
@@ -547,8 +588,8 @@ _TRIPCONTROLLER = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=836,
-  serialized_end=1073,
+  serialized_start=885,
+  serialized_end=1132,
   methods=[
   _descriptor.MethodDescriptor(
     name='List',
@@ -556,7 +597,7 @@ _TRIPCONTROLLER = _descriptor.ServiceDescriptor(
     index=0,
     containing_service=None,
     input_type=_TRIPLISTREQUEST,
-    output_type=_TRIP,
+    output_type=_TRIPLISTRESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
@@ -613,8 +654,8 @@ _LOCATIONCONTROLLER = _descriptor.ServiceDescriptor(
   index=1,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=1076,
-  serialized_end=1353,
+  serialized_start=1135,
+  serialized_end=1412,
   methods=[
   _descriptor.MethodDescriptor(
     name='List',
@@ -679,8 +720,8 @@ _REASONTOCANCELTRIPCONTROLLER = _descriptor.ServiceDescriptor(
   index=2,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=1356,
-  serialized_end=1733,
+  serialized_start=1415,
+  serialized_end=1792,
   methods=[
   _descriptor.MethodDescriptor(
     name='List',

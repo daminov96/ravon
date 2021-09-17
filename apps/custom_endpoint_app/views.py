@@ -2,36 +2,45 @@ import grpc
 from django.shortcuts import render
 from rest_framework.views import APIView
 import rest_framework.permissions as permissions
-
+from google.protobuf.json_format import MessageToDict
 from apps.generated.trip.protos import trip_pb2, trip_pb2_grpc
 from rest_framework.response import Response
 import rest_framework.status  as status
 
 
+def cast_json(value):
+    from google.protobuf.json_format import MessageToDict
+
+    try:
+        if not value:
+            return []
+        repeated_values = list(value)
+        values = []
+        for value in repeated_values:
+            if isinstance(value, (int, str, float)):
+                values.append(value)
+                continue
+            values.append(MessageToDict(value, False, True))
+    except Exception as e:
+        print(e)
+        values = MessageToDict(value, False, True)
+    return values
+
+
 class OrderList(APIView):
+
     # permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
         print('ad')
         user = self.request.user
         with grpc.insecure_channel('localhost:50051') as channel:
-            print('tushdimiaaa')
             stub = trip_pb2_grpc.TripControllerStub(channel)
             trip_list_request = trip_pb2.TripListRequest()
             trip_list_request.driver = "asdfasdfa"
-            users = []
-            print('users', users)
-            for user in stub.List(trip_list_request):
-                print("user", user)
-                item = dict()
-                item.update({"id": user.id})
-                item.update({"created": user.created})
-                item.update({"driver": user.driver})
-                item.update({"customer": user.customer})
-                print("item", item)
-                users.append(item)
+            response = stub.List(trip_list_request)
             channel.close()
-        return Response({"success": users}, status=status.HTTP_200_OK)
+        return Response({"success": cast_json(response.results)}, status=status.HTTP_200_OK)
 
 
 class OrderCreate(APIView):
@@ -47,4 +56,5 @@ class OrderCreate(APIView):
             stub.Create(trip)
             channel.close()
         return Response({"success": "success"}, status=status.HTTP_200_OK)
+
 

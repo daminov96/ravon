@@ -15,10 +15,10 @@ class TripControllerStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.List = channel.unary_stream(
+        self.List = channel.unary_unary(
                 '/trip.TripController/List',
                 request_serializer=protos_dot_trip__pb2.TripListRequest.SerializeToString,
-                response_deserializer=protos_dot_trip__pb2.Trip.FromString,
+                response_deserializer=protos_dot_trip__pb2.TripListResponse.FromString,
                 )
         self.Create = channel.unary_unary(
                 '/trip.TripController/Create',
@@ -78,10 +78,10 @@ class TripControllerServicer(object):
 
 def add_TripControllerServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'List': grpc.unary_stream_rpc_method_handler(
+            'List': grpc.unary_unary_rpc_method_handler(
                     servicer.List,
                     request_deserializer=protos_dot_trip__pb2.TripListRequest.FromString,
-                    response_serializer=protos_dot_trip__pb2.Trip.SerializeToString,
+                    response_serializer=protos_dot_trip__pb2.TripListResponse.SerializeToString,
             ),
             'Create': grpc.unary_unary_rpc_method_handler(
                     servicer.Create,
@@ -124,9 +124,9 @@ class TripController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/trip.TripController/List',
+        return grpc.experimental.unary_unary(request, target, '/trip.TripController/List',
             protos_dot_trip__pb2.TripListRequest.SerializeToString,
-            protos_dot_trip__pb2.Trip.FromString,
+            protos_dot_trip__pb2.TripListResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
