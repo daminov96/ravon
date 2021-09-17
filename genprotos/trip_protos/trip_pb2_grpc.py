@@ -3,7 +3,7 @@
 import grpc
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-from apps.generated.trip.protos import trip_pb2 as protos_dot_trip__pb2
+from genprotos.trip_protos import trip_pb2 as protos_dot_trip__pb2
 
 
 class TripControllerStub(object):
@@ -16,27 +16,27 @@ class TripControllerStub(object):
             channel: A grpc.Channel.
         """
         self.List = channel.unary_unary(
-                '/trip.TripController/List',
+                '/trip_protos.TripController/List',
                 request_serializer=protos_dot_trip__pb2.TripListRequest.SerializeToString,
                 response_deserializer=protos_dot_trip__pb2.TripListResponse.FromString,
                 )
         self.Create = channel.unary_unary(
-                '/trip.TripController/Create',
+                '/trip_protos.TripController/Create',
                 request_serializer=protos_dot_trip__pb2.Trip.SerializeToString,
                 response_deserializer=protos_dot_trip__pb2.Trip.FromString,
                 )
         self.Retrieve = channel.unary_unary(
-                '/trip.TripController/Retrieve',
+                '/trip_protos.TripController/Retrieve',
                 request_serializer=protos_dot_trip__pb2.TripRetrieveRequest.SerializeToString,
                 response_deserializer=protos_dot_trip__pb2.Trip.FromString,
                 )
         self.Update = channel.unary_unary(
-                '/trip.TripController/Update',
+                '/trip_protos.TripController/Update',
                 request_serializer=protos_dot_trip__pb2.Trip.SerializeToString,
                 response_deserializer=protos_dot_trip__pb2.Trip.FromString,
                 )
         self.Destroy = channel.unary_unary(
-                '/trip.TripController/Destroy',
+                '/trip_protos.TripController/Destroy',
                 request_serializer=protos_dot_trip__pb2.Trip.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
@@ -105,7 +105,7 @@ def add_TripControllerServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'trip.TripController', rpc_method_handlers)
+            'trip_protos.TripController', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -124,7 +124,7 @@ class TripController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/trip.TripController/List',
+        return grpc.experimental.unary_unary(request, target, '/trip_protos.TripController/List',
             protos_dot_trip__pb2.TripListRequest.SerializeToString,
             protos_dot_trip__pb2.TripListResponse.FromString,
             options, channel_credentials,
@@ -141,7 +141,7 @@ class TripController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/trip.TripController/Create',
+        return grpc.experimental.unary_unary(request, target, '/trip_protos.TripController/Create',
             protos_dot_trip__pb2.Trip.SerializeToString,
             protos_dot_trip__pb2.Trip.FromString,
             options, channel_credentials,
@@ -158,7 +158,7 @@ class TripController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/trip.TripController/Retrieve',
+        return grpc.experimental.unary_unary(request, target, '/trip_protos.TripController/Retrieve',
             protos_dot_trip__pb2.TripRetrieveRequest.SerializeToString,
             protos_dot_trip__pb2.Trip.FromString,
             options, channel_credentials,
@@ -175,7 +175,7 @@ class TripController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/trip.TripController/Update',
+        return grpc.experimental.unary_unary(request, target, '/trip_protos.TripController/Update',
             protos_dot_trip__pb2.Trip.SerializeToString,
             protos_dot_trip__pb2.Trip.FromString,
             options, channel_credentials,
@@ -192,7 +192,7 @@ class TripController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/trip.TripController/Destroy',
+        return grpc.experimental.unary_unary(request, target, '/trip_protos.TripController/Destroy',
             protos_dot_trip__pb2.Trip.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
@@ -209,27 +209,27 @@ class LocationControllerStub(object):
             channel: A grpc.Channel.
         """
         self.List = channel.unary_stream(
-                '/trip.LocationController/List',
+                '/trip_protos.LocationController/List',
                 request_serializer=protos_dot_trip__pb2.LocationListRequest.SerializeToString,
                 response_deserializer=protos_dot_trip__pb2.Location.FromString,
                 )
         self.Create = channel.unary_unary(
-                '/trip.LocationController/Create',
+                '/trip_protos.LocationController/Create',
                 request_serializer=protos_dot_trip__pb2.Location.SerializeToString,
                 response_deserializer=protos_dot_trip__pb2.Location.FromString,
                 )
         self.Retrieve = channel.unary_unary(
-                '/trip.LocationController/Retrieve',
+                '/trip_protos.LocationController/Retrieve',
                 request_serializer=protos_dot_trip__pb2.LocationRetrieveRequest.SerializeToString,
                 response_deserializer=protos_dot_trip__pb2.Location.FromString,
                 )
         self.Update = channel.unary_unary(
-                '/trip.LocationController/Update',
+                '/trip_protos.LocationController/Update',
                 request_serializer=protos_dot_trip__pb2.Location.SerializeToString,
                 response_deserializer=protos_dot_trip__pb2.Location.FromString,
                 )
         self.Destroy = channel.unary_unary(
-                '/trip.LocationController/Destroy',
+                '/trip_protos.LocationController/Destroy',
                 request_serializer=protos_dot_trip__pb2.Location.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
@@ -298,7 +298,7 @@ def add_LocationControllerServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'trip.LocationController', rpc_method_handlers)
+            'trip_protos.LocationController', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -317,7 +317,7 @@ class LocationController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/trip.LocationController/List',
+        return grpc.experimental.unary_stream(request, target, '/trip_protos.LocationController/List',
             protos_dot_trip__pb2.LocationListRequest.SerializeToString,
             protos_dot_trip__pb2.Location.FromString,
             options, channel_credentials,
@@ -334,7 +334,7 @@ class LocationController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/trip.LocationController/Create',
+        return grpc.experimental.unary_unary(request, target, '/trip_protos.LocationController/Create',
             protos_dot_trip__pb2.Location.SerializeToString,
             protos_dot_trip__pb2.Location.FromString,
             options, channel_credentials,
@@ -351,7 +351,7 @@ class LocationController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/trip.LocationController/Retrieve',
+        return grpc.experimental.unary_unary(request, target, '/trip_protos.LocationController/Retrieve',
             protos_dot_trip__pb2.LocationRetrieveRequest.SerializeToString,
             protos_dot_trip__pb2.Location.FromString,
             options, channel_credentials,
@@ -368,7 +368,7 @@ class LocationController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/trip.LocationController/Update',
+        return grpc.experimental.unary_unary(request, target, '/trip_protos.LocationController/Update',
             protos_dot_trip__pb2.Location.SerializeToString,
             protos_dot_trip__pb2.Location.FromString,
             options, channel_credentials,
@@ -385,7 +385,7 @@ class LocationController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/trip.LocationController/Destroy',
+        return grpc.experimental.unary_unary(request, target, '/trip_protos.LocationController/Destroy',
             protos_dot_trip__pb2.Location.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
@@ -402,27 +402,27 @@ class ReasonToCancelTripControllerStub(object):
             channel: A grpc.Channel.
         """
         self.List = channel.unary_stream(
-                '/trip.ReasonToCancelTripController/List',
+                '/trip_protos.ReasonToCancelTripController/List',
                 request_serializer=protos_dot_trip__pb2.ReasonToCancelTripListRequest.SerializeToString,
                 response_deserializer=protos_dot_trip__pb2.ReasonToCancelTrip.FromString,
                 )
         self.Create = channel.unary_unary(
-                '/trip.ReasonToCancelTripController/Create',
+                '/trip_protos.ReasonToCancelTripController/Create',
                 request_serializer=protos_dot_trip__pb2.ReasonToCancelTrip.SerializeToString,
                 response_deserializer=protos_dot_trip__pb2.ReasonToCancelTrip.FromString,
                 )
         self.Retrieve = channel.unary_unary(
-                '/trip.ReasonToCancelTripController/Retrieve',
+                '/trip_protos.ReasonToCancelTripController/Retrieve',
                 request_serializer=protos_dot_trip__pb2.ReasonToCancelTripRetrieveRequest.SerializeToString,
                 response_deserializer=protos_dot_trip__pb2.ReasonToCancelTrip.FromString,
                 )
         self.Update = channel.unary_unary(
-                '/trip.ReasonToCancelTripController/Update',
+                '/trip_protos.ReasonToCancelTripController/Update',
                 request_serializer=protos_dot_trip__pb2.ReasonToCancelTrip.SerializeToString,
                 response_deserializer=protos_dot_trip__pb2.ReasonToCancelTrip.FromString,
                 )
         self.Destroy = channel.unary_unary(
-                '/trip.ReasonToCancelTripController/Destroy',
+                '/trip_protos.ReasonToCancelTripController/Destroy',
                 request_serializer=protos_dot_trip__pb2.ReasonToCancelTrip.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
@@ -491,7 +491,7 @@ def add_ReasonToCancelTripControllerServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'trip.ReasonToCancelTripController', rpc_method_handlers)
+            'trip_protos.ReasonToCancelTripController', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -510,7 +510,7 @@ class ReasonToCancelTripController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/trip.ReasonToCancelTripController/List',
+        return grpc.experimental.unary_stream(request, target, '/trip_protos.ReasonToCancelTripController/List',
             protos_dot_trip__pb2.ReasonToCancelTripListRequest.SerializeToString,
             protos_dot_trip__pb2.ReasonToCancelTrip.FromString,
             options, channel_credentials,
@@ -527,7 +527,7 @@ class ReasonToCancelTripController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/trip.ReasonToCancelTripController/Create',
+        return grpc.experimental.unary_unary(request, target, '/trip_protos.ReasonToCancelTripController/Create',
             protos_dot_trip__pb2.ReasonToCancelTrip.SerializeToString,
             protos_dot_trip__pb2.ReasonToCancelTrip.FromString,
             options, channel_credentials,
@@ -544,7 +544,7 @@ class ReasonToCancelTripController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/trip.ReasonToCancelTripController/Retrieve',
+        return grpc.experimental.unary_unary(request, target, '/trip_protos.ReasonToCancelTripController/Retrieve',
             protos_dot_trip__pb2.ReasonToCancelTripRetrieveRequest.SerializeToString,
             protos_dot_trip__pb2.ReasonToCancelTrip.FromString,
             options, channel_credentials,
@@ -561,7 +561,7 @@ class ReasonToCancelTripController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/trip.ReasonToCancelTripController/Update',
+        return grpc.experimental.unary_unary(request, target, '/trip_protos.ReasonToCancelTripController/Update',
             protos_dot_trip__pb2.ReasonToCancelTrip.SerializeToString,
             protos_dot_trip__pb2.ReasonToCancelTrip.FromString,
             options, channel_credentials,
@@ -578,7 +578,7 @@ class ReasonToCancelTripController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/trip.ReasonToCancelTripController/Destroy',
+        return grpc.experimental.unary_unary(request, target, '/trip_protos.ReasonToCancelTripController/Destroy',
             protos_dot_trip__pb2.ReasonToCancelTrip.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
