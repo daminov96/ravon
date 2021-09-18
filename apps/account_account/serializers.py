@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data['teacher'] = UserSerializer(instance=instance.teacher_id)
+        # data['teacher'] = UserSerializer(instance=instance.teacher_id)
         # try:
         #     request = self.context['request']
         #     if request.query_params.get('center_id', None):

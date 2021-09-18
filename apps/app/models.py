@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from parler.managers import TranslationManager
 from parler.models import TranslatableModel, TranslatedFields
-
+from apps.account_account.models import CustomUser
 from apps.constants import *
 
 from .managers import CarBrandManager, CarManager, CityManager
@@ -114,6 +114,15 @@ class Model(TranslatableModel):
 
 
 class Car(models.Model):
+    STANDARD = 'standard'
+    COMFORT = "comfort"
+    LUXURY = 'luxury'
+    TYPE = (
+        (STANDARD, 'Standard'),
+        (COMFORT, 'Comfort'),
+        (LUXURY, 'Luxury'),
+    )
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True, blank=True)
@@ -125,7 +134,7 @@ class Car(models.Model):
     available_wheelchair = models.BooleanField(default=False)
     has_seat_for_babes = models.BooleanField(default=False)
     number_of_seats = models.IntegerField(default=4)
-
+    type_of_car = models.CharField(max_length=100, choices=TYPE, null=True)
     # objects = CarManager()
 
 

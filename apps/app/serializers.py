@@ -1,7 +1,7 @@
 from parler_rest.fields import TranslatedFieldsField
 from parler_rest.serializers import TranslatableModelSerializer
 from rest_framework import serializers
-
+from apps.account_account.models import CustomUser
 from .models import (
     Brand,
     Car,
@@ -57,12 +57,19 @@ class LocationSerializer(TranslatableModelSerializer):
         fields = "__all__"
 
 
+class UserSerializerForCar(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'username', 'first_name', 'last_name', 'gender']
+
+
 class CarSerializer(serializers.ModelSerializer):
-    image = serializers.FileField(source="details_sample.image", read_only=True)
+    owner = UserSerializerForCar(read_only=True)
 
     class Meta:
         model = Car
-        fields = "__all__"
+        fields = ['id', 'image', 'brand', 'model', 'min_price', 'color', 'number', 'available_wheelchair',
+                  'has_seat_for_babes', 'number_of_seats', 'type_of_car', 'created', 'updated', 'owner']
 
 
 class BrandSerializer(TranslatableModelSerializer):
