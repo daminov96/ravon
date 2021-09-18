@@ -21,9 +21,6 @@ class CustomUser(AbstractUser):
         (MALE, "Male"),
         (FEMALE, "Female"),
     )
-    DRIVER = "driver"
-    CUSTOMER = "customer"
-    TYPE_OF_USER = ((DRIVER, "Driver"), (CUSTOMER, "Customer"))
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     username_validator = UnicodeUsernameValidator()
 
@@ -41,8 +38,7 @@ class CustomUser(AbstractUser):
             "unique": _("A user with that username already exists."),
         },
     )
-    first_name = models.CharField(_("first name"), max_length=150, blank=True)
-    last_name = models.CharField(_("last name"), max_length=150, blank=True)
+    full_name = models.CharField(_("full name"), max_length=250, blank=True)
     dob = models.DateField(null=True)
     gender = models.CharField(choices=GENDER_CHOICES, max_length=15, null=True)
     phone = models.CharField(
@@ -68,12 +64,17 @@ class CustomUser(AbstractUser):
             "Unselect this instead of deleting accounts."
         ),
     )
-    date_joined = models.DateTimeField(_("date joined"), auto_now_add=True)
+    password_ceria=models.CharField(max_length=20, null=True, blank=True)
+    passport_issue_date=models.DateField(null=True, blank=True)
+    passport_expire_date=models.DateField(null=True, blank=True)
 
-    objects = UserManager()
+    date_joined = models.DateTimeField(_("date joined"), auto_now_add=True)
+    is_verified = models.BooleanField(default=False)
     registration_address = models.CharField(max_length=300, null=True)
     registration_lat = models.CharField(max_length=100, null=True)
     registration_long = models.CharField(max_length=100, null=True)
+
+    objects = UserManager()
 
 
     EMAIL_FIELD = "email"
@@ -106,11 +107,6 @@ class CustomUser(AbstractUser):
     def get_phone(self):
         return str(self.phone).replace("+998", "")
 
-
-class DriverPhoneInfo(models.Model):
-    driver = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='phones')
-    phone_type = models.CharField(max_length=100, null=True)
-    phone_model = models.CharField(max_length=100, null=True)
 
 class Cashilok(models.Model):
     owner = models.OneToOneField(
