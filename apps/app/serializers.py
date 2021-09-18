@@ -1,16 +1,22 @@
 from parler_rest.fields import TranslatedFieldsField
 from parler_rest.serializers import TranslatableModelSerializer
 from rest_framework import serializers
+
 from apps.account_account.models import CustomUser
+
 from .models import (
     Brand,
     Car,
+    CarColor,
+    CarTechPassportCheck,
     City,
+    DriverLicensePhotoCheck,
     Location,
     LocationType,
     MinimumPriceForKm,
     Model,
     Plan,
+    PlanRequest,
     Routine,
 )
 
@@ -60,7 +66,7 @@ class LocationSerializer(TranslatableModelSerializer):
 class UserSerializerForCar(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'first_name', 'last_name', 'gender']
+        fields = ["id", "username", "first_name", "last_name", "gender"]
 
 
 class CarSerializer(serializers.ModelSerializer):
@@ -68,8 +74,23 @@ class CarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Car
-        fields = ['id', 'image', 'brand', 'model', 'min_price', 'color', 'number', 'available_wheelchair',
-                  'has_seat_for_babes', 'number_of_seats', 'type_of_car', 'created', 'updated', 'owner']
+        fields = [
+            "id",
+            "image",
+            "brand",
+            "model",
+            "min_price",
+            "color",
+            "available_wheelchair",
+            "has_seat_for_babes",
+            "number_of_seats",
+            "type_of_car",
+            "created",
+            "updated",
+            "owner",
+            "manifacture_year",
+            "gos_number",
+        ]
 
 
 class BrandSerializer(TranslatableModelSerializer):
@@ -85,4 +106,28 @@ class ModelSerializer(TranslatableModelSerializer):
 
     class Meta:
         model = Model
+        fields = "__all__"
+
+
+class PlanRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlanRequest
+        fields = "__all__"
+
+
+class CarColorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarColor
+        fields = "__all__"
+
+
+class DriverLicensePhotoCheckSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DriverLicensePhotoCheck
+        fields = "__all__"
+
+
+class CarTechPassportCheckSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarTechPassportCheck
         fields = "__all__"

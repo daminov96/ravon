@@ -34,7 +34,7 @@ class CarManager(models.Manager):
         # return self.get_queryset().all()
 
     def get_cars(self):
-        print('get carsssss')
+        print("get carsssss")
         return self.select_related("brand")
 
 

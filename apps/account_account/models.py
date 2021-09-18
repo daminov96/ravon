@@ -65,9 +65,9 @@ class CustomUser(AbstractUser):
             "Unselect this instead of deleting accounts."
         ),
     )
-    password_ceria=models.CharField(max_length=20, null=True, blank=True)
-    passport_issue_date=models.DateField(null=True, blank=True)
-    passport_expire_date=models.DateField(null=True, blank=True)
+    password_ceria = models.CharField(max_length=20, null=True, blank=True)
+    passport_issue_date = models.DateField(null=True, blank=True)
+    passport_expire_date = models.DateField(null=True, blank=True)
 
     date_joined = models.DateTimeField(_("date joined"), auto_now_add=True)
     is_verified = models.BooleanField(default=False)
@@ -75,10 +75,11 @@ class CustomUser(AbstractUser):
     registration_lat = models.CharField(max_length=100, null=True)
     registration_long = models.CharField(max_length=100, null=True)
     is_online = models.BooleanField(default=False)
-    plan = models.ForeignKey('app.Plan', on_delete=models.SET_NULL, null=True, blank=True)
+    plan = models.ForeignKey(
+        "app.Plan", on_delete=models.SET_NULL, null=True, blank=True
+    )
 
     objects = UserManager()
-
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "username"
@@ -174,6 +175,11 @@ class RateOfDriver(models.Model):
     updated = models.DateTimeField(auto_now=True, null=True)
     on_trip = models.CharField(max_length=100, unique=True)
     customer = models.CharField(max_length=100)
-    driver = models.ForeignKey('account_account.CustomUser', related_name='rates', on_delete=models.SET_NULL, null=True)
+    driver = models.ForeignKey(
+        "account_account.CustomUser",
+        related_name="rates",
+        on_delete=models.SET_NULL,
+        null=True,
+    )
     rate = models.IntegerField(choices=RATE_CHOICES)
     comment = models.TextField()
