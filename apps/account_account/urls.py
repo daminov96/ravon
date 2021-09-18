@@ -1,9 +1,7 @@
 from django.urls import path
 from rest_framework import routers
 
-# import account_pb2_grpc
 
-from .services import UserService
 from .views import (
     GetUser,
     ResendVerificationCode,
