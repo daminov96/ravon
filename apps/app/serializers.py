@@ -18,19 +18,19 @@ from .models import (
 class CitySerializer(serializers.ModelSerializer):
     class Meta:
         model = City
-        fields = ["id", "name", "latitude", "longtitude"]
+        fields = "__all__"
 
 
 class RoutineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Routine
-        fields = ["id", "routine", "start_range", "end_range"]
+        fields = "__all__"
 
 
 class MinimumPriceKmSerializer(serializers.ModelSerializer):
     class Meta:
         model = MinimumPriceForKm
-        fields = ["id", "price", "city", "routine"]
+        fields = "__all__"
 
 
 class PlanSerializer(TranslatableModelSerializer):
@@ -38,7 +38,7 @@ class PlanSerializer(TranslatableModelSerializer):
 
     class Meta:
         model = Plan
-        fields = ["translations", "id", "min_price", "rate", "image"]
+        fields = "__all__"
 
 
 class LocationTypeSerializer(TranslatableModelSerializer):
@@ -46,7 +46,7 @@ class LocationTypeSerializer(TranslatableModelSerializer):
 
     class Meta:
         model = LocationType
-        fields = ["translations", "created", "updated"]
+        fields = "__all__"
 
 
 class LocationSerializer(TranslatableModelSerializer):
@@ -54,16 +54,7 @@ class LocationSerializer(TranslatableModelSerializer):
 
     class Meta:
         model = Location
-        fields = [
-            "translations",
-            "id",
-            "location_type",
-            "owner",
-            "model_object_id",
-            "model_object_type",
-            "lat",
-            "long",
-        ]
+        fields = "__all__"
 
 
 class CarSerializer(serializers.ModelSerializer):
@@ -71,18 +62,7 @@ class CarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Car
-        fields = [
-            "id",
-            "brand",
-            "model",
-            "min_price",
-            "image",
-            "color",
-            "number",
-            "available_wheelchair",
-            "has_seat_for_babes",
-            "number_of_seats",
-        ]
+        fields = "__all__"
 
 
 class BrandSerializer(TranslatableModelSerializer):
@@ -90,7 +70,7 @@ class BrandSerializer(TranslatableModelSerializer):
 
     class Meta:
         model = Brand
-        fields = ["id", "translations", "logo"]
+        fields = "__all__"
 
 
 class ModelSerializer(TranslatableModelSerializer):
@@ -98,4 +78,4 @@ class ModelSerializer(TranslatableModelSerializer):
 
     class Meta:
         model = Model
-        fields = ["id", "translations", "image"]
+        fields = "__all__"
