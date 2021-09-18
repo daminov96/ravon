@@ -3,12 +3,16 @@ from rest_framework import routers
 
 from .views import (
     BrandView,
+    CarColorViewSet,
+    CarTechPassportCheckViewSet,
     CarView,
     CityView,
+    DriverLicensePhotoCheckViewSet,
     LocationTypeView,
     LocationView,
     MinimumPriceKmView,
     ModelView,
+    PlanRequestViewSet,
     PlanView,
     RoutineView,
 )
@@ -25,6 +29,9 @@ router.register("location", LocationView)
 router.register("car", CarView)
 router.register("brand", BrandView)
 router.register("model", ModelView)
+router.register("car_color", CarColorViewSet)
+router.register("plan_request", PlanRequestViewSet)
+router.register("driver_license_photoCheck", DriverLicensePhotoCheckViewSet)
+router.register("car_tech_passport_check", CarTechPassportCheckViewSet)
 
-urlpatterns = router.urls + [
-]
+urlpatterns = router.urls + []

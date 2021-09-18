@@ -1,28 +1,37 @@
 from django.shortcuts import render
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.viewsets import ModelViewSet
+
 from apps.app import filter_params
-from drf_yasg.utils import swagger_auto_schema
 
 from .models import (
     Brand,
     Car,
+    CarColor,
+    CarTechPassportCheck,
     City,
+    DriverLicensePhotoCheck,
     Location,
     LocationType,
     MinimumPriceForKm,
     Model,
     Plan,
+    PlanRequest,
     Routine,
 )
 from .serializers import (
     BrandSerializer,
+    CarColorSerializer,
     CarSerializer,
+    CarTechPassportCheckSerializer,
     CitySerializer,
+    DriverLicensePhotoCheckSerializer,
     LocationSerializer,
     LocationTypeSerializer,
     MinimumPriceKmSerializer,
     ModelSerializer,
+    PlanRequestSerializer,
     PlanSerializer,
     RoutineSerializer,
 )
@@ -35,7 +44,7 @@ class CityView(ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryparams = self.request.query_params
-        name = queryparams.get('name', None)
+        name = queryparams.get("name", None)
         if name:
             queryset = queryset.filter(name__icontains=name)
         return queryset
@@ -48,11 +57,11 @@ class CityView(ModelViewSet):
 class RoutineView(ModelViewSet):
     queryset = Routine.objects.all()
     serializer_class = RoutineSerializer
-    
+
     def get_queryset(self):
         queryset = super().get_queryset()
         queryparams = self.request.query_params
-        name = queryparams.get('name', None)
+        name = queryparams.get("name", None)
         if name:
             queryset = queryset.filter(name__icontains=name)
         return queryset
@@ -70,7 +79,7 @@ class MinimumPriceKmView(ModelViewSet):
         queryset = super().get_queryset()
         queryparams = self.request.query_params
 
-        price = queryparams.get('price', None)
+        price = queryparams.get("price", None)
         if price:
             queryset = queryset.filter(price=price)
         return queryset
@@ -102,7 +111,7 @@ class CarView(ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryparams = self.request.query_params
-        number = queryparams.get('number', None)
+        number = queryparams.get("number", None)
         if number:
             queryset = queryset.filter(number=number)
 
@@ -120,7 +129,7 @@ class BrandView(ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryparams = self.request.query_params
-        name = queryparams.get('name', None)
+        name = queryparams.get("name", None)
         if name:
             queryset = queryset.filter(name=name)
 
@@ -138,7 +147,7 @@ class ModelView(ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryparams = self.request.query_params
-        name = queryparams.get('name', None)
+        name = queryparams.get("name", None)
         if name:
             queryset = queryset.filter(name=name)
 
@@ -147,3 +156,23 @@ class ModelView(ModelViewSet):
     @swagger_auto_schema(manual_parameters=filter_params.get_model_params())
     def list(self, request, *args, **kwargs):
         return super(ModelView, self).list(kwargs)
+
+
+class CarColorViewSet(ModelViewSet):
+    queryset = CarColor.objects.all()
+    serializer_class = CarColorSerializer
+
+
+class PlanRequestViewSet(ModelViewSet):
+    queryset = PlanRequest.objects.all()
+    serializer_class = PlanRequestSerializer
+
+
+class DriverLicensePhotoCheckViewSet(ModelViewSet):
+    queryset = DriverLicensePhotoCheck.objects.all()
+    serializer_class = DriverLicensePhotoCheckSerializer
+
+
+class CarTechPassportCheckViewSet(ModelViewSet):
+    queryset = CarTechPassportCheck.objects.all()
+    serializer_class = CarTechPassportCheckSerializer

@@ -150,5 +150,3 @@ class TokenSerializer(TokenObtainPairSerializer):
         data["access"] = str(refresh.access_token)
         data["user"] = UserSerializer(instance=self.user, context=self.context).data
         return data
-
-

@@ -49,4 +49,24 @@ class CarAdmin(admin.ModelAdmin):
     list_display = ("id", "created", "updated", "brand", "model", "color", "gos_number")
 
 
+@admin.register(app_models.PlanRequest)
+class PlanRequestAdmin(admin.ModelAdmin):
+    list_display = ["id", 'driver', "plan", 'status']
+
+
+@admin.register(app_models.DriverLicensePhotoCheck)
+class DriverLicensePhotoCheckAdmin(admin.ModelAdmin):
+    list_display = ["id", "driver", 'is_verified']
+
+
+@admin.register(app_models.CarTechPassportCheck)
+class CarTechPassportCheckAdmin(admin.ModelAdmin):
+    list_display = ["id", "driver", 'is_verified']
+
+
+@admin.register(app_models.CarColor)
+class CarColorAdmin(admin.ModelAdmin):
+    list_display = ["id", 'hex_code', 'name']
+
+
 admin.site.register(app_models.Plan, PlanAdmin)

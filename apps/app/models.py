@@ -1,11 +1,12 @@
+from ckeditor.fields import RichTextField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from parler.managers import TranslationManager
 from parler.models import TranslatableModel, TranslatedFields
+
 from apps.account_account.models import CustomUser
 from apps.constants import *
-from ckeditor.fields import RichTextField
 
 from .managers import CarBrandManager, CarManager, CityManager
 
@@ -67,14 +68,22 @@ class Plan(TranslatableModel):
 class PlanRequest(models.Model):
     driver = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
-    car_front_image = models.FileField(null=True, blank=True, upload_to='plan_request/')
-    car_left_image = models.FileField(null=True, blank=True, upload_to='plan_request/')
-    car_back_image = models.FileField(null=True, blank=True, upload_to='plan_request/')
-    car_right_image = models.FileField(null=True, blank=True, upload_to='plan_request/')
-    car_front_interior_image = models.FileField(null=True, blank=True, upload_to='plan_request/')
-    car_rear_interior_image = models.FileField(null=True, blank=True, upload_to='plan_request/')
-    car_open_truck_image = models.FileField(null=True, blank=True, upload_to='plan_request/')
-    status = models.CharField(choices=PLAN_REQUEST_STATUS_CHOICES, default=PLAN_REQUEST_CREATED, max_length=60)
+    car_front_image = models.FileField(null=True, blank=True, upload_to="plan_request/")
+    car_left_image = models.FileField(null=True, blank=True, upload_to="plan_request/")
+    car_back_image = models.FileField(null=True, blank=True, upload_to="plan_request/")
+    car_right_image = models.FileField(null=True, blank=True, upload_to="plan_request/")
+    car_front_interior_image = models.FileField(
+        null=True, blank=True, upload_to="plan_request/"
+    )
+    car_rear_interior_image = models.FileField(
+        null=True, blank=True, upload_to="plan_request/"
+    )
+    car_open_truck_image = models.FileField(
+        null=True, blank=True, upload_to="plan_request/"
+    )
+    status = models.CharField(
+        choices=PLAN_REQUEST_STATUS_CHOICES, default=PLAN_REQUEST_CREATED, max_length=60
+    )
 
 
 class LocationType(TranslatableModel):
@@ -133,13 +142,13 @@ class CarColor(models.Model):
 
 
 class Car(models.Model):
-    STANDARD = 'standard'
+    STANDARD = "standard"
     COMFORT = "comfort"
-    LUXURY = 'luxury'
+    LUXURY = "luxury"
     TYPE = (
-        (STANDARD, 'Standard'),
-        (COMFORT, 'Comfort'),
-        (LUXURY, 'Luxury'),
+        (STANDARD, "Standard"),
+        (COMFORT, "Comfort"),
+        (LUXURY, "Luxury"),
     )
     owner = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     color = models.ForeignKey(CarColor, on_delete=models.CASCADE, null=True, blank=True)
@@ -172,6 +181,7 @@ class CarTechPassportCheck(models.Model):
     back_image = models.FileField(null=True, blank=True)
     tech_passport_and_driver = models.FileField(null=True, blank=True)
     is_verified = models.BooleanField(default=False)
+
 
 # class TaxiPark(models.Model):
 #     name = models.CharField(max_length=200)
