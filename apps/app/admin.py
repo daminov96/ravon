@@ -46,7 +46,7 @@ class BrandAdmin(TranslatableAdmin):
 
 @admin.register(app_models.Car)
 class CarAdmin(admin.ModelAdmin):
-    list_display = ("id", "created", "updated", "brand", "model", "color", "number")
+    list_display = ("id", "created", "updated", "brand", "model", "color", "gos_number")
 
 
 admin.site.register(app_models.Plan, PlanAdmin)

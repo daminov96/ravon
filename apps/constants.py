@@ -1,4 +1,5 @@
 # CHOICES IN MODELS
+from django.utils.translation import gettext_lazy as _
 
 MALE = "male"
 FEMALE = "female"
@@ -30,3 +31,14 @@ STATE_CHOICES_OF_TRIP = (
 )
 
 RATE_CHOICES = ((1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
+
+
+PLAN_REQUEST_CREATED='created'
+PLAN_REQUEST_ACCEPTED='accepted'
+PLAN_REQUEST_DENIED='denied'
+
+PLAN_REQUEST_STATUS_CHOICES = (
+    (PLAN_REQUEST_CREATED, _('Created')),
+    (PLAN_REQUEST_ACCEPTED, _('Accepted')),
+    (PLAN_REQUEST_DENIED, _('Denied'))
+)

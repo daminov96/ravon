@@ -5,6 +5,7 @@ from parler.managers import TranslationManager
 from parler.models import TranslatableModel, TranslatedFields
 from apps.account_account.models import CustomUser
 from apps.constants import *
+from ckeditor.fields import RichTextField
 
 from .managers import CarBrandManager, CarManager, CityManager
 
@@ -63,6 +64,19 @@ class Plan(TranslatableModel):
         return self.safe_translation_getter("name") or ""
 
 
+class PlanRequest(models.Model):
+    driver = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+    car_front_image = models.FileField(null=True, blank=True, upload_to='plan_request/')
+    car_left_image = models.FileField(null=True, blank=True, upload_to='plan_request/')
+    car_back_image = models.FileField(null=True, blank=True, upload_to='plan_request/')
+    car_right_image = models.FileField(null=True, blank=True, upload_to='plan_request/')
+    car_front_interior_image = models.FileField(null=True, blank=True, upload_to='plan_request/')
+    car_rear_interior_image = models.FileField(null=True, blank=True, upload_to='plan_request/')
+    car_open_truck_image = models.FileField(null=True, blank=True, upload_to='plan_request/')
+    status = models.CharField(choices=PLAN_REQUEST_STATUS_CHOICES, default=PLAN_REQUEST_CREATED, max_length=60)
+
+
 class LocationType(TranslatableModel):
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
@@ -113,6 +127,11 @@ class Model(TranslatableModel):
         return self.safe_translation_getter("name") or ""
 
 
+class CarColor(models.Model):
+    hex_code = models.CharField(max_length=20, unique=True)
+    name = models.CharField(max_length=30, unique=True)
+
+
 class Car(models.Model):
     STANDARD = 'standard'
     COMFORT = "comfort"
@@ -122,15 +141,16 @@ class Car(models.Model):
         (COMFORT, 'Comfort'),
         (LUXURY, 'Luxury'),
     )
-    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+    owner = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    color = models.ForeignKey(CarColor, on_delete=models.CASCADE, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True, blank=True)
     model = models.ForeignKey(Model, on_delete=models.SET_NULL, null=True, blank=True)
     min_price = models.FloatField(validators=[validate_interval])
     image = models.ImageField(upload_to="plan_image/")
-    color = models.CharField(max_length=100)
-    number = models.CharField(max_length=100)
+    manifacture_year = models.IntegerField(null=True)
+    gos_number = models.CharField(max_length=100)
     available_wheelchair = models.BooleanField(default=False)
     has_seat_for_babes = models.BooleanField(default=False)
     number_of_seats = models.IntegerField(default=4)
@@ -138,12 +158,21 @@ class Car(models.Model):
     # objects = CarManager()
 
 
-# class RateOfDriver(models.Model):
-#     created = models.DateTimeField(auto_now_add=True, null=True)
-#     updated = models.DateTimeField(auto_now=True, null=True)
-#     on_trip = models.OneToOneField(Trip, on_delete=models.CASCADE)
-#     customer = models.ForeignKey('account_account.CustomUser', related_name='rated_trips', on_delete=models.SET_NULL,
-#                                  null=True)
-#     driver = models.ForeignKey('account_account.CustomUser', related_name='rates', on_delete=models.SET_NULL, null=True)
-#     rate = models.IntegerField(choices=RATE_CHOICES)
-#     comment = models.TextField()
+class DriverLicensePhotoCheck(models.Model):
+    driver = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    front_image = models.FileField(null=True, blank=True)
+    back_image = models.FileField(null=True, blank=True)
+    licence_and_driver = models.FileField(null=True, blank=True)
+    is_verified = models.BooleanField(default=False)
+
+
+class CarTechPassportCheck(models.Model):
+    driver = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    front_image = models.FileField(null=True, blank=True)
+    back_image = models.FileField(null=True, blank=True)
+    tech_passport_and_driver = models.FileField(null=True, blank=True)
+    is_verified = models.BooleanField(default=False)
+
+# class TaxiPark(models.Model):
+#     name = models.CharField(max_length=200)
+#     info = RichTextField()
