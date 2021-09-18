@@ -96,29 +96,19 @@ class UserList(viewsets.ModelViewSet):
         query = queryparam.get("query", None)
         group_id = queryparam.get("group_id", None)
         not_in_group_id = queryparam.get("not_in_group_id", None)
-        center_id = queryparam.get("center_id", None)
-        parent_id = queryparam.get("parent_id", None)
-        type_of_user = queryparam.get("type_of_user", None)
         is_verified = queryparam.get("is_verified", None)
         not_verified = queryparam.get("not_verified", None)
-        if center_id:
-            queryset = queryset.filter(connections__center__id=center_id)
         if is_verified:
             queryset = queryset.filter(connections__is_verified=True)
         if not_verified:
             queryset = queryset.filter(connections__is_verified=False)
-        if parent_id:
-            queryset = queryset.filter(parents__id__in=parent_id)
         if query:
             queryset = queryset.filter(
                 Q(first_name__icontains=query)
                 | Q(username__icontains=query)
                 | Q(last_name__icontains=query)
             ).distinct()
-        if type_of_user:
-            queryset = queryset.filter(
-                connections__center__id=center_id, connections__status=type_of_user
-            )
+
         if queryparam.get("parent_id", None):
             queryset = queryset.filter(parents__in=[queryparam.get("parent_id", None)])
         if group_id:

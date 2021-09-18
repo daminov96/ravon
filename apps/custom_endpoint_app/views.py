@@ -2,7 +2,7 @@ import grpc
 from rest_framework.views import APIView
 from genprotos.trip_protos import trip_pb2, trip_pb2_grpc
 from rest_framework.response import Response
-import rest_framework.status  as status
+import rest_framework.status as status
 
 
 def cast_json(value):
@@ -29,8 +29,9 @@ class OrderList(APIView):
     # permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
+        print('ad')
         user = self.request.user
-        with grpc.insecure_channel('order:50051') as channel:
+        with grpc.insecure_channel('localhost:50051') as channel:
             stub = trip_pb2_grpc.TripControllerStub(channel)
             trip_list_request = trip_pb2.TripListRequest()
             trip_list_request.driver = "asdfasdfa"
@@ -41,10 +42,9 @@ class OrderList(APIView):
 
 class OrderCreate(APIView):
     # permission_classes = (permissions.IsAuthenticated,)
-
     def post(self, request, *args, **kwargs):
         user = self.request.user
-        with grpc.insecure_channel('order:50051') as channel:
+        with grpc.insecure_channel('localhost:50051') as channel:
             stub = trip_pb2_grpc.TripControllerStub(channel)
             location = trip_pb2.Location(location_name="Asdfasdf", lat="ASDfa", long="ASDfasdf",
                                          model_object_type="ASDFa", model_object_id="Asdfasd")
@@ -54,4 +54,4 @@ class OrderCreate(APIView):
             channel.close()
         return Response({"success": "success"}, status=status.HTTP_200_OK)
 
-# "asdfasdfa"
+
