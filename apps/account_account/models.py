@@ -112,6 +112,7 @@ class DriverPhoneInfo(models.Model):
     phone_type = models.CharField(max_length=100, null=True)
     phone_model = models.CharField(max_length=100, null=True)
 
+
 class Cashilok(models.Model):
     owner = models.OneToOneField(
         CustomUser, related_name="cashelok", on_delete=models.CASCADE
