@@ -8,7 +8,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.text import gettext_lazy as _
-from parler.models import TranslatableModel, TranslatedFields
+from parler.models import TranslatableModel
 from rest_framework.exceptions import ValidationError
 
 from apps.account_account.managers import UserManager
@@ -74,8 +74,7 @@ class CustomUser(AbstractUser):
     registration_address = models.CharField(max_length=300, null=True)
     registration_lat = models.CharField(max_length=100, null=True)
     registration_long = models.CharField(max_length=100, null=True)
-    registration_phone_type = models.CharField(max_length=100, null=True)
-    registration_phone_model = models.CharField(max_length=100, null=True)
+
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "username"
@@ -107,6 +106,11 @@ class CustomUser(AbstractUser):
     def get_phone(self):
         return str(self.phone).replace("+998", "")
 
+
+class DriverPhoneInfo(models.Model):
+    driver = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='phones')
+    phone_type = models.CharField(max_length=100, null=True)
+    phone_model = models.CharField(max_length=100, null=True)
 
 class Cashilok(models.Model):
     owner = models.OneToOneField(

@@ -61,12 +61,3 @@ if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-
-import account_pb2_grpc
-from apps.account_account.services import UserService
-
-
-def grpc_handlers(server):
-    account_pb2_grpc.add_CustomUserControllerServicer_to_server(
-        UserService.as_servicer(), server
-    )
