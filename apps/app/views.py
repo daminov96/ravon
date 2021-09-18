@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.viewsets import ModelViewSet
+from apps.app import filter_params
+from drf_yasg.utils import swagger_auto_schema
 
 from .models import (
     Brand,
@@ -29,6 +31,20 @@ from .serializers import (
 class CityView(ModelViewSet):
     queryset = City.objects.all()
     serializer_class = CitySerializer
+
+    def get_queryset(self):
+        queryset = self.get_queryset()
+        queryparams = self.request.query_params
+
+        name = queryparams.get('name', None)
+        if name:
+            queryset = queryset.filter(name__incontains=name)
+
+        return queryset
+
+    @swagger_auto_schema(manual_parameters=filter_params.get_city_params())
+    def list(self, request, *args, **kwargs):
+        return super(CityView).list(**kwargs)
 
 
 class RoutineView(ModelViewSet):
@@ -60,31 +76,6 @@ class CarView(ModelViewSet):
     # queryset = Car.objects.select_related('brand', 'model').all()
     queryset = Car.objects.all()
     serializer_class = CarSerializer
-
-
-class CarDetailView(RetrieveAPIView):
-    serializer_class = CarSerializer
-    lookup_field = "id"
-
-    def get_queryset(self):
-        print("detail")
-        return Car.objects.get_car_detail()
-
-
-class CarListView(ListAPIView):
-    serializer_class = CarSerializer
-
-    def get_queryset(self):
-        return Car.objects.get_cars()
-
-
-class CarCreateView(CreateAPIView):
-    serializer_class = CarSerializer
-
-    def perform_create(self, serializer):
-        serializer.instance = Car.objects.create_car_with_brand(
-            serializer.validated_data
-        )
 
 
 class BrandView(ModelViewSet):

@@ -2,7 +2,7 @@ import grpc
 from rest_framework.views import APIView
 from genprotos.trip_protos import trip_pb2, trip_pb2_grpc
 from rest_framework.response import Response
-import rest_framework.status  as status
+import rest_framework.status as status
 
 
 def cast_json(value):
