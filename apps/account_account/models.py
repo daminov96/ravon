@@ -4,7 +4,6 @@ from ckeditor.fields import RichTextField
 from django.contrib.auth.models import AbstractUser, User
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.mail import send_mail
-from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.text import gettext_lazy as _
@@ -13,6 +12,8 @@ from rest_framework.exceptions import ValidationError
 
 from apps.account_account.managers import UserManager
 from apps.constants import RATE_CHOICES
+from django.contrib.gis.geos import Point
+from django.contrib.gis.db import models
 
 
 class CustomUser(AbstractUser):
@@ -75,6 +76,7 @@ class CustomUser(AbstractUser):
     registration_lat = models.CharField(max_length=100, null=True)
     registration_long = models.CharField(max_length=100, null=True)
     is_online = models.BooleanField(default=False)
+    is_busy = models.BooleanField(default=False)
     plan = models.ForeignKey(
         "app.Plan", on_delete=models.SET_NULL, null=True, blank=True
     )
@@ -183,3 +185,17 @@ class RateOfDriver(models.Model):
     )
     rate = models.IntegerField(choices=RATE_CHOICES)
     comment = models.TextField()
+
+
+class CurrentLocationOfDriver(models.Model):
+    driver = models.OneToOneField(CustomUser, on_delete=models.CASCADE, null=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True, null=True)
+    location_name = models.CharField(max_length=400)
+    latitude = models.CharField(max_length=150)
+    longtitude = models.CharField(max_length=150)
+    point = models.PointField(blank=True, null=True, srid=32140)
+
+    def save(self, *args, **kwargs):
+        self.point = Point(float(self.latitude), float(self.longtitude))
+        super(CurrentLocationOfDriver, self).save(*args, **kwargs)

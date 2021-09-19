@@ -139,3 +139,7 @@ def get_comment_of_video_params():
     )
 
     return [video_id]
+
+
+def get_current_location_driver_params():
+    return []

@@ -251,3 +251,25 @@ class ForgetPasword(APIView):
             except CustomUser.DoesNotExist:
                 Response({"error": "User with this phone number does not exist"})
         return Response({"error": "Username number not provided"})
+
+
+class CurrentLocationOfDriverViewSet(ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated, )
+    queryset = CurrentLocationOfDriver.objects.all()
+    serializer_class = CurrentLocationOfDriverSerializer
+
+    def get_serializer_context(self):
+        return {'request':self.request}
+
+    @swagger_auto_schema(manual_parameters=filter_params.get_user_params())
+    def list(self, request, *args, **kwargs):
+        return super(CurrentLocationOfDriverViewSet, self).list(kwargs)
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryparam = self.request.query_params
+        # group_id = queryparam.get("group_id", None)
+        # if group_id:
+        #     queryset = queryset.filter(regsitered_groups__id=group_id)
+        return queryset.distinct()
+
