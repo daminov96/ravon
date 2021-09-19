@@ -88,3 +88,8 @@ class CashilokAdmin(admin.ModelAdmin):
 @admin.register(account_models.CashilokFill)
 class CashilokFillAdmin(admin.ModelAdmin):
     list_display = ["id", "owner", "amount", "created"]
+
+
+@admin.register(account_models.RateOfDriver)
+class RateOfDriverAdmin(admin.ModelAdmin):
+    list_display = ['id', 'on_trip', 'customer', 'rate']
