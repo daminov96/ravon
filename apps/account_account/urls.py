@@ -8,10 +8,13 @@ from .views import (
     TokenRefreshView,
     UserList,
     VerifyPhone,
+    RateOfDriverViewSet,
 )
 
 router = routers.SimpleRouter()
 router.register("users", UserList)
+router.register('rate_of_driver', RateOfDriverViewSet)
+
 urlpatterns = router.urls + [
     path("token/", TokenGenerateView.as_view(), name="token_obtain_pair"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),

@@ -15,7 +15,6 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.utils import json
 from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView as JWTTokenObtainPairView
@@ -251,3 +250,8 @@ class ForgetPasword(APIView):
             except CustomUser.DoesNotExist:
                 Response({"error": "User with this phone number does not exist"})
         return Response({"error": "Username number not provided"})
+
+
+class RateOfDriverViewSet(viewsets.ModelViewSet):
+    queryset = RateOfDriver.objects.all()
+    serializer_class = RateOfDriverSerializer
