@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
 from apps.account_account.models import *
+
 from apps.utils.utils import sendsms
 
 
@@ -156,3 +156,7 @@ class CurrentLocationOfDriverSerializer(serializers.ModelSerializer):
     class Meta:
         model = CurrentLocationOfDriver
         read_only_fields = ('point',)
+class RateOfDriverSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RateOfDriver
+        fields = "__all__"
