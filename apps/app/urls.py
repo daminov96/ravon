@@ -15,6 +15,7 @@ from .views import (
     PlanRequestViewSet,
     PlanView,
     RoutineView,
+    # TripView,
 )
 
 router = routers.SimpleRouter()
@@ -34,4 +35,6 @@ router.register("plan_request", PlanRequestViewSet)
 router.register("driver_license_photoCheck", DriverLicensePhotoCheckViewSet)
 router.register("car_tech_passport_check", CarTechPassportCheckViewSet)
 
-urlpatterns = router.urls + []
+urlpatterns = router.urls + [
+    # path('trip/', TripView.as_view(), name='trip'),
+]
