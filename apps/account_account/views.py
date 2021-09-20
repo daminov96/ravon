@@ -147,7 +147,7 @@ class VerifyPhone(APIView):
             if user:
                 user = user.last()
                 if user.phone_verification_code != None:
-                    if code == user.phone_verification_code:
+                    if int(code) == user.phone_verification_code:
                         user.is_active = True
                         user.save()
                         refresh = TokenObtainPairSerializer().get_token(user)

@@ -10,6 +10,8 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from rest_framework.documentation import include_docs_urls
 from rest_framework_swagger.views import get_swagger_view  # new
+from genprotos.trip_protos import trip_pb2_grpc
+from apps.custom_endpoint_app.services import *
 
 API_TITLE = 'Ravon Taxi Project Docs"'
 API_DESCRIPTION = "Ravon Taxi Project Docs"
@@ -56,6 +58,10 @@ urlpatterns = [
     # url(r'^', include('rest_framework_tus.urls', namespace='rest_framework_tus')),
     # new
 ]
+
+
+def grpc_handlers(server):
+    trip_pb2_grpc.add_NewTripControllerServicer_to_server(NewTripService.as_servicer(), server)
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
