@@ -2,9 +2,11 @@ from django.shortcuts import render
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.viewsets import ModelViewSet
-
+from rest_framework.views import APIView
 from apps.app import filter_params
-
+from rest_framework.response import Response
+from rest_framework import status
+import requests
 from .models import (
     Brand,
     Car,
@@ -34,6 +36,7 @@ from .serializers import (
     PlanRequestSerializer,
     PlanSerializer,
     RoutineSerializer,
+    TripSerializer,
 )
 
 
@@ -176,3 +179,6 @@ class DriverLicensePhotoCheckViewSet(ModelViewSet):
 class CarTechPassportCheckViewSet(ModelViewSet):
     queryset = CarTechPassportCheck.objects.all()
     serializer_class = CarTechPassportCheckSerializer
+
+
+

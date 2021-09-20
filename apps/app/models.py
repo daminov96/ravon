@@ -182,7 +182,6 @@ class CarTechPassportCheck(models.Model):
     tech_passport_and_driver = models.FileField(null=True, blank=True)
     is_verified = models.BooleanField(default=False)
 
-
 # class TaxiPark(models.Model):
 #     name = models.CharField(max_length=200)
 #     info = RichTextField()
