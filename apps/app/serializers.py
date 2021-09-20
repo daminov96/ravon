@@ -131,3 +131,31 @@ class CarTechPassportCheckSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarTechPassportCheck
         fields = "__all__"
+
+
+class LocationSerializerForTrip(serializers.Serializer):
+    location_name = serializers.CharField(max_length=100)
+    model_object_id = serializers.CharField(max_length=150)
+    model_object_type = serializers.CharField(max_length=50)
+    lat = serializers.CharField(max_length=150)
+    long = serializers.CharField(max_length=150)
+
+
+class ReasonToCancelTrip(serializers.Serializer):
+    created = serializers.DateTimeField()
+    updated = serializers.DateTimeField()
+    reason = serializers.CharField(max_length=300)
+
+
+class TripSerializer(serializers.Serializer):
+    created = serializers.DateTimeField()
+    updated = serializers.DateTimeField()
+    driver = serializers.CharField(max_length=250)
+    customer = serializers.CharField(max_length=250)
+    plan = serializers.CharField(max_length=250)
+    state = serializers.CharField(max_length=250)
+    from_point = LocationSerializerForTrip(many=True)
+    to_point = LocationSerializerForTrip(many=True)
+    price = serializers.FloatField()
+    reason_to_cancel = ReasonToCancelTrip(many=True)
+
