@@ -68,13 +68,11 @@ class TripConsumer(AsyncWebsocketConsumer):
             data = {
                 'type': 'chat_message',
                 'message': {
-                    "action_type": text_data["action_type"],
-                    "event_type": text_data["event_type"],
-                    "message_type": text_data["message_type"],
+                    "order":order
                 }
             }
             await self.channel_layer.group_send(
-                f"chat_user_{i.get('id')}",
+               i,
                 data
             )
 
