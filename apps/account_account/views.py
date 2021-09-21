@@ -272,6 +272,7 @@ class CurrentLocationOfDriverViewSet(viewsets.ModelViewSet):
         #     queryset = queryset.filter(regsitered_groups__id=group_id)
         return queryset.distinct()
 
+
 class RateOfDriverViewSet(viewsets.ModelViewSet):
     queryset = RateOfDriver.objects.all()
     serializer_class = RateOfDriverSerializer
