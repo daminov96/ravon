@@ -253,7 +253,7 @@ class ForgetPasword(APIView):
 
 
 class CurrentLocationOfDriverViewSet(viewsets.ModelViewSet):
-    permission_classes = (permissions.IsAuthenticated, )
+    # permission_classes = (permissions.IsAuthenticated, )
     queryset = CurrentLocationOfDriver.objects.all()
     serializer_class = CurrentLocationOfDriverSerializer
 

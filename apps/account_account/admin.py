@@ -20,6 +20,8 @@ class UserAdmin(DjangoUserAdmin, ie_admin.ImportExportModelAdmin):
                     "email",
                     "phone_verification_code",
                     "image",
+                    "is_online",
+                    "is_busy",
                 )
             },
         ),
@@ -88,6 +90,12 @@ class CashilokAdmin(admin.ModelAdmin):
 @admin.register(account_models.CashilokFill)
 class CashilokFillAdmin(admin.ModelAdmin):
     list_display = ["id", "owner", "amount", "created"]
+
+
+
+@admin.register(account_models.CurrentLocationOfDriver)
+class CurrentLocationOfDriverAdmin(admin.ModelAdmin):
+    list_display = ["id", "driver"]
 
 
 @admin.register(account_models.RateOfDriver)

@@ -155,6 +155,7 @@ class TokenSerializer(TokenObtainPairSerializer):
 class CurrentLocationOfDriverSerializer(serializers.ModelSerializer):
     class Meta:
         model = CurrentLocationOfDriver
+        fields = '__all__'
         read_only_fields = ('point',)
 class RateOfDriverSerializer(serializers.ModelSerializer):
     class Meta:
