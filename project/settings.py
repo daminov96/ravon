@@ -123,18 +123,18 @@ WSGI_APPLICATION = "project.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# DATABASES = {"default": env.db()}
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'taxi_driver',
-        'USER': 'cwc',
-        'PASSWORD': 'cwc',
-        'HOST': 'localhost',
-        'PORT': 5432
-
-    }
-}
+DATABASES = {"default": env.db()}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': 'taxi_driver',
+#         'USER': 'cwc',
+#         'PASSWORD': 'cwc',
+#         'HOST': 'localhost',
+#         'PORT': 5432
+#
+#     }
+# }
 #
 # DATABASES = {
 #     'default': {

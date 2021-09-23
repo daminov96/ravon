@@ -68,14 +68,13 @@ class TripConsumer(AsyncWebsocketConsumer):
             data = {
                 'type': 'chat_message',
                 'message': {
-                    "order":order
+                    "order": order
                 }
             }
             await self.channel_layer.group_send(
                i,
                 data
             )
-
 
 
     @database_sync_to_async

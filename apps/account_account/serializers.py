@@ -156,6 +156,9 @@ class CurrentLocationOfDriverSerializer(serializers.ModelSerializer):
     class Meta:
         model = CurrentLocationOfDriver
         read_only_fields = ('point',)
+        fields = "__all__"
+
+
 class RateOfDriverSerializer(serializers.ModelSerializer):
     class Meta:
         model = RateOfDriver
