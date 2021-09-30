@@ -35,14 +35,18 @@ class TripConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.rooms = []
         self.user = self.scope['user']
+        print("connet")
+        print(self.user)
         if self.user.is_anonymous:
             await self.close()
         await self.room({'user': self.user})
+        print("after await")
         for i in self.rooms:
             await self.channel_layer.group_add(
                 group=i,
                 channel=self.channel_name
             )
+        print("after for")
         await self.accept()
 
     @database_sync_to_async
@@ -77,6 +81,7 @@ class TripConsumer(AsyncWebsocketConsumer):
         qs = CurrentLocationOfDriver.objects.filter(point__distance_lte=(pnt, D(km=20)), driver__is_online=True,
                                                     driver__is_busy=False)
         rooms = []
+        rooms.append(f'chat_user_1')
         for i in qs:
             rooms.append(f'chat_user_{i.id}')
         return rooms

@@ -32,7 +32,8 @@ class OrderList(APIView):
     def get(self, request, *args, **kwargs):
         print("ad")
         user = self.request.user
-        with grpc.insecure_channel("localhost:50051") as channel:
+        print("hello world")
+        with grpc.insecure_channel("order:50051") as channel:
             stub = trip_pb2_grpc.TripControllerStub(channel)
             trip_list_request = trip_pb2.TripListRequest()
             trip_list_request.driver = "asdfasdfa"
@@ -47,7 +48,7 @@ class OrderCreate(APIView):
     # permission_classes = (permissions.IsAuthenticated,)
     def post(self, request, *args, **kwargs):
         user = self.request.user
-        with grpc.insecure_channel("localhost:50051") as channel:
+        with grpc.insecure_channel("order:50051") as channel:
             stub = trip_pb2_grpc.TripControllerStub(channel)
             location = trip_pb2.Location(
                 location_name="Asdfasdf",
