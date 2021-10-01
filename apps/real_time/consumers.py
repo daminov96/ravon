@@ -1,6 +1,5 @@
-# chat/consumers.py
 import json
-from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer, WebsocketConsumer
 from rest_framework import response
 
 from channels.db import database_sync_to_async
@@ -10,8 +9,7 @@ from rest_framework import status
 from django.contrib.gis.measure import D
 from django.contrib.gis.geos import *
 from apps.account_account.models import CustomUser, CurrentLocationOfDriver
-
-
+from channels.layers import get_channel_layer
 
 CREATE_ACTION_TYPE = 'create'
 CONNECT_ACTION_TYPE = 'connect'
@@ -20,6 +18,7 @@ EDIT_ACTION_TYPE = 'edit'
 DELETE_ACTION_TYPE = 'delete'
 TEXT_MESSAGE_TYPE = 'text'
 IMAGE_MESSAGE_TYPE = 'image'
+
 
 # data = {
 #     'type': 'chat_message',
@@ -33,54 +32,57 @@ IMAGE_MESSAGE_TYPE = 'image'
 
 class TripConsumer(AsyncWebsocketConsumer):
     async def connect(self):
+        print('TripConsumer')
+
         self.rooms = []
         self.user = self.scope['user']
+        print(self.user)
         if self.user.is_anonymous:
             await self.close()
-        await self.channel_layer.group_add(
-            'title',
-            self.channel_name
-        )
-        await self.room({'user': self.user, 'type': "one_to_one"})
+        await self.room({'user': self.user})
+        print('after await')
+        print(self.rooms)
+        print("after rooms")
         for i in self.rooms:
             await self.channel_layer.group_add(
                 group=i,
                 channel=self.channel_name
             )
+        print("after for")
 
         await self.accept()
 
     @database_sync_to_async
     def room(self, text_data=None):
         self.rooms.append(f'chat_user_{self.user.id}')
-    async def disconnect(self, close_code):
+
+    def disconnect(self, close_code):
         # Leave room group
         for room in self.rooms:
-            await self.channel_layer.group_discard(
+            self.channel_layer.group_discard(
                 room,
                 self.channel_name
             )
 
     async def send_new_order_alert_to_drivers(self, order):
-        rooms = await self.get_nearest_available_drivers(order.from_location)
-        for i in rooms:
-
-            data = {
-                'type': 'chat_message',
-                'message': {
-                    "order": order
-                }
+        rooms = await self.get_nearest_available_drivers(order['from_point'])
+        data = {
+            'type': 'chat_message',
+            'message': {
+                "order": order
             }
+        }
+        for i in rooms:
             await self.channel_layer.group_send(
-               i,
+                i,
                 data
             )
 
-
     @database_sync_to_async
     def get_nearest_available_drivers(self, from_location=None):
-        pnt = fromstr(f'POINT({from_location.latitute} {from_location.longtitude} )', srid=4326)
-        qs = CurrentLocationOfDriver.objects.filter(point__distance_lte=(pnt, D(km=20)), driver__is_online=True, driver__is_busy=False)
+        pnt = fromstr(f"POINT({float(from_location['lat'])} {float(from_location['long'])} )", srid=32140)
+        qs = CurrentLocationOfDriver.objects.filter(point__distance_lte=(pnt, D(km=20)), driver__is_online=True,
+                                                    driver__is_busy=False)
         rooms = []
         for i in qs:
             rooms.append(f'chat_user_{i.id}')
@@ -120,6 +122,7 @@ class TripConsumer(AsyncWebsocketConsumer):
                     "chat_user_%s" % self.user.id,
                     message['data']
                 )
+
     def define_action_and_message_type_call_proper_function(self, text_data):
         # if text_data['event_type'] == 'message':
         #     if text_data['action_type'] == CREATE_ACTION_TYPE:
@@ -145,6 +148,7 @@ class TripConsumer(AsyncWebsocketConsumer):
 
     # Receive message from room group
     async def chat_message(self, event):
+        print("message event")
         message = event['message']
         await self.send(text_data=json.dumps(message))
 
@@ -159,4 +163,3 @@ expected_style_of_request = {
         "room": 1
     }
 }
-

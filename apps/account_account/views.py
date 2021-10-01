@@ -253,12 +253,12 @@ class ForgetPasword(APIView):
 
 
 class CurrentLocationOfDriverViewSet(viewsets.ModelViewSet):
-    permission_classes = (permissions.IsAuthenticated, )
+    # permission_classes = (permissions.IsAuthenticated, )
     queryset = CurrentLocationOfDriver.objects.all()
     serializer_class = CurrentLocationOfDriverSerializer
 
     def get_serializer_context(self):
-        return {'request':self.request}
+        return {'request': self.request}
 
     @swagger_auto_schema(manual_parameters=filter_params.get_user_params())
     def list(self, request, *args, **kwargs):
