@@ -65,6 +65,8 @@ THIRT_PARTY_APPS = [
     "storages",
     "django_grpc_framework",
     "debug_toolbar",
+    'django.contrib.gis',
+
 ]
 CUSTOM_CREATED_APPS = [
     "apps.app",
@@ -127,11 +129,16 @@ WSGI_APPLICATION = "project.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'ravon',
-        'USER': 'ravon',
-        'PASSWORD': 'ravon',
-        'HOST': 'localhost',
-        'PORT': 5432
+        # 'NAME': 'ravon',
+        # 'USER': 'ravon',
+        # 'PASSWORD': 'ravon',
+        # 'HOST': 'localhost',
+        # 'PORT': 5433,
+        'NAME': 'taxi_driver',
+        'USER': 'taxi_driver',
+        'PASSWORD': 'PPXrcorm4bLWNz8X',
+        'HOST': 'db-postgresql-nyc3-19441-do-user-8068965-0.b.db.ondigitalocean.com',
+        'PORT': 25060
 
     }
 }
@@ -222,12 +229,12 @@ USE_L10N = True
 USE_TZ = True
 
 # Email
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = env("EMAIL_HOST")
-EMAIL_USE_TLS = env("EMAIL_USE_TLS")
-EMAIL_PORT = env("EMAIL_PORT")
-EMAIL_HOST_USER = env("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = env("EMAIL_HOST")
+# EMAIL_USE_TLS = env("EMAIL_USE_TLS")
+# EMAIL_PORT = env("EMAIL_PORT")
+# EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 
 # STATIC_URL = '/assets/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
@@ -236,6 +243,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "assets")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
@@ -457,7 +465,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
+            "hosts": [("redis", 6379)],
         },
     },
 }
@@ -473,3 +481,7 @@ CLICK_SETTINGS = {
 # Celery Configuration Options
 CELERY_TIMEZONE = "Asia/Tashkent"
 CELERY_TASK_TRACK_STARTED = True
+
+# GDAL_LIBRARY_PATH = '/opt/homebrew/Cellar/gdal/3.3.2_2/lib/libgdal.dylib'
+GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH')
+GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH')
