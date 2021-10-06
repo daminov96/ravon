@@ -18,7 +18,7 @@ RUN pwd
 RUN pip install --upgrade pip && pip install --no-cache-dir -r ./requirements/base.txt
 RUN pwd
 
-RUN chmod +x /app/ravon_taxi/entrypoint.sh
+RUN chmod a+rx /app/ravon_taxi/entrypoint.sh
 RUN mkdir /etc/supervisor.d/
 RUN cp ./supervisord.conf /etc/supervisor/conf.d/
 ENTRYPOINT ["/app/ravon_taxi/entrypoint.sh"]
